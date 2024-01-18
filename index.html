@@ -9,19 +9,36 @@
     <link rel="stylesheet" href="mediaqueries.css" />
   </head>
   <body>
-    <nav id="desktop-nav">
-      <div class="logo"><span class="red">J</span>DAMPS</div>
-      <div>
-        <ul class="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#experience">Skills</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-    </nav>
+      <nav id="desktop-nav">
+        <span>
+          <div class="logo"><img src="./assets/logo.png" alt="logo"></div>
+        </span>
+        <div>
+          <ul class="nav-links">
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#experience">SKILLS</a></li>
+            <li><a href="#projects">PROJECT</a></li>
+            <li><a href="#contact">CONTACTS</a></li>
+          </ul>
+        </div>
+        <div id="socials-container">
+          <img
+            src="./assets/linkedin.jfif"
+            alt="My LinkedIn profile"
+            class="icon"
+            onclick="location.href='https://linkedin.com/'"
+          />
+          <img
+            src="./assets/github.png"
+            alt="My Github profile"
+            class="icon"
+            onclick="location.href='https://github.com/'"
+          />
+        </div>
+      </nav>
     <nav id="hamburger-nav">
-        <div class="logo"><span class="red">J</span>DAMPS</div>
+
+      <div class="logo"><img src="./assets/logo.png" alt="logo"></div>
       <div class="hamburger-menu">
         <div class="hamburger-icon" onclick="toggleMenu()">
           <span></span>
@@ -36,43 +53,28 @@
         </div>
       </div>
     </nav>
+    
     <section id="profile">
         <div class="section__text">
-            <h1 class="homepage">Hello, I'm</h1>
-            <h1 class="homepage">Joshua Dampil</h1>
-            <p class="section__text__p2">Aspiring Full Stack Developer</p>
-            <div class="btn-container">
-              <button class="btn btn-color-1" onclick="location.href='./#contact'">
-                Contact Info
-              </button>
-            </div>
-            <div id="socials-container">
-              <img
-                src="./assets/linkedin.jfif"
-                alt="My LinkedIn profile"
-                class="icon"
-                onclick="location.href='https://linkedin.com/'"
-              />
-              <img
-                src="./assets/github.jfif"
-                alt="My Github profile"
-                class="icon"
-                onclick="location.href='https://github.com/'"
-              />
-            </div>
-          </div>    
+            <h2 class="homepage">Hello, I'm</h2>
+            <h1 class="name">Joshua Dampil</h1>
+            <h1 class="section__text__p2">Aspiring Full Stack Developer</h1>
+        </div>    
       <div class="section__pic-container">
         <img src="./assets/profilepic.jpg" alt="JoshDamps profile picture" class="profile-pic" />
+
       </div>
+      <div class="mobile-logo"> <img src="./assets/mobilelogo.jpg" alt="mobile pic" class="mobile-pic"></div>
 
     </section>
+
     <section id="about">
       <p class="section__text__p1">Get To Know More</p>
       <h1 class="title">About Me</h1>
       <div class="section-container">
         <div class="section__pic-container">
           <img
-            src="./assets/profilepic.jpg"
+            src="./assets/aboutpic.jpg"
             alt="Profile picture"
             class="about-pic"
           />
@@ -307,11 +309,11 @@
             alt="Email icon"
             class="icon contact-icon email-icon"
           />
-          <p><a href="mailto:examplemail@gmail.com">Example@gmail.com</a></p>
+          <p><a href="mailto:joshuagdampil@gmail.com">joshuagdampil@gmail.com</a></p>
         </div>
         <div class="contact-info-container">
           <img
-            src="./assets/linkedin.png"
+            src="./assets/linkedin.jfif"
             alt="LinkedIn icon"
             class="icon contact-icon"
           />

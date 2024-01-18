@@ -1,4 +1,4 @@
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 2000px) {
     #profile {
       height: 83vh;
       margin-bottom: 6rem;
@@ -10,9 +10,15 @@
     #projects {
       height: fit-content;
     }
+    .mobile-logo{
+      display: none;
+    }
   }
   
   @media screen and (max-width: 1200px) {
+    .mobile-logo{
+      display: none;
+    }
     #desktop-nav {
       display: none;
     }
@@ -43,30 +49,65 @@
       margin: 0 auto 2rem;
     }
     .about-containers {
-      margin-top: 0;
+      margin-top: 5;
+    }
+
+    .homepage{
+      text-align: left;
+    }
+    .section__text__p2{
+      text-align: left;
     }
   }
   
   @media screen and (max-width: 600px) {
-    #contact,
-    footer {
-      height: 40vh;
+    
+    #desktop-nav {
+      display: none;
     }
+    
+    .mobile-logo {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .mobile-logo img {
+      border-radius: 2rem;
+      border: 3px solid gold;
+      width: 55%; /* Adjust as needed */
+    }
+    
+
     #profile {
-      height: 83vh;
-      margin-bottom: 0;
+      height: 80vh;
     }
+
+    #profile,
+    #about,
+    #experience,
+    #contanct{
+      margin-bottom: 70px;
+    }
+
+    .section__pic-container{
+      display: none;
+    }
+
+    .homepage{
+      font-size: 2rem;
+    }
+
     article {
       font-size: 1rem;
     }
     footer nav {
       height: fit-content;
-      margin-bottom: 2rem;
     }
     .about-containers,
     .contact-info-upper-container,
     .btn-container {
       flex-wrap: wrap;
+
     }
     .contact-info-container {
       margin: 0;
@@ -79,7 +120,7 @@
       font-size: 1.25rem;
     }
     .logo {
-      font-size: 1.5rem;
+      font-size: 1.0rem;
     }
     .nav-links {
       flex-direction: column;
@@ -99,5 +140,9 @@
     }
     .text-container {
       text-align: justify;
+    }
+  
+    .footer {
+      height: 35vh;
     }
   }

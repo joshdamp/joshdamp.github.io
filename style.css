@@ -1,6 +1,6 @@
 /* GENERAL */
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,500;1,500&family=Roboto+Slab:wght@100..900&display=swap')
 .red {
     color: rgba(255, 0, 0, 0.717);
     font-size: 50px;
@@ -12,8 +12,8 @@
 }
 
 body {
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  background-color:rgba(213, 213, 220, 0.66);
+  font-family: "Lato", sans-serif;
+  background: radial-gradient(rgba(255, 217, 0, 0.305), rgb(188, 188, 178),rgb(220, 167, 88) )
 }
 
 html {
@@ -24,6 +24,39 @@ p {
   color: rgb(85, 85, 85);
 }
 
+
+
+/* ANIMATION */
+
+.section__text__p2
+{
+   text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #8f7ecf 0%,
+    #1e1b49 29%,
+    #3e0c1c 67%,
+    #3d3b08 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 5s linear infinite;
+  display: inline-block;
+      font-size: 190px;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
 /* TRANSITION */
 
 a,
@@ -31,33 +64,51 @@ a,
   transition: all 300ms ease;
 }
 
+
 /* DESKTOP NAV */
 
-nav,
-.nav-links {
-  display: flex;
-  background-color:rgb(23, 23, 23);
-  
-
-}
 
 nav {
+  display: flex;
   justify-content: space-around;
   align-items: center;
   height: 17vh;
-  color: rgb(255, 255, 255);
+  color: rgba(220, 167, 88, 0.45);
+  background-color: rgb(23, 23, 23);
 }
 
 .nav-links {
-  gap: 4rem;
+  font-weight: bold;
+  opacity: 85%;
+  display: flex;
+  justify-content: center;
+  gap: 7rem;
   list-style: none;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  width: 100%;
+  background-image: linear-gradient(
+    -225deg,
+    #f6f1afc3 0%,
+    #706c48ae 29%,
+    #d3c614ad 67%,
+    #9f9b34c6 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 10s linear infinite;
+  
 }
 
 a {
   color: black;
   text-decoration: none;
-  color: rgba(230, 218, 218, 0.624);
+  color: rgba(220, 167, 88, 0.646);
   text-align: right;
 }
 
@@ -65,16 +116,20 @@ a:hover {
   color: grey;
   text-decoration: underline;
   text-underline-offset: 1rem;
-  text-decoration-color: rgb(181, 181, 181);
+  text-decoration-color: rgb(220, 167, 88);
 }
 
 .logo {
-  font-size: 2rem;
+  justify-content: start;
+  gap: 0;
 }
 
 .logo:hover {
   cursor: default;
 }
+
+/* *
+
 
 /* HAMBURGER MENU */
 
@@ -187,7 +242,7 @@ section {
 
 .profile-pic{
     border-radius: 50%;
-    border: 3px solid gold;
+    border: 5px solid gold;
 }
 .section__pic-container {
   display: flex;
@@ -217,6 +272,11 @@ section {
 .homepage{
     font-size: 3rem;
     text-align: left;
+}
+
+.name{
+  font-size: 3.5rem;
+  color: rgb(134, 58, 58);
 }
 
 .title {
@@ -328,6 +388,7 @@ section {
   border-color: rgb(163, 163, 163);
   text-align: center;
 }
+
 
 .section-container {
   gap: 4rem;
