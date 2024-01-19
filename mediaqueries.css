@@ -56,6 +56,11 @@
       font-size: 2rem;
       text-align: left;
     }
+
+    .section__text {
+      margin-top: 3rem;
+    }
+    
     .section__text__p2 {
       font-size: 1.8rem;
       margin-bottom: 2rem;
@@ -101,6 +106,15 @@
       display: flex;
     }
 
+    nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 17vh;
+      color: rgba(36, 53, 81, 0.45);
+      background-color: rgb(13, 8, 36);
+      height: 6rem;
+    }
     .mobile-logo {
       display: flex;
       justify-content: center;
@@ -108,7 +122,7 @@
     
     .mobile-logo img {
       border-radius: 2rem;
-      border: 3px solid rgb(39, 39, 38);
+      border: 5px solid rgb(39, 39, 38);
       width: 55%;
     }
     
@@ -143,7 +157,7 @@
       font-size: 25px;
       color: rgba(0, 0, 0, 0.963);
       background-color: rgb(132, 132, 134);
-      margin-bottom: 1rem;
+      margin-bottom: 3rem;
     }
     
     .section__text__p2 {
@@ -213,6 +227,10 @@
 
   }
 
+
+
+
+
   @media screen and (max-width: 450px) {
         
     #desktop-nav {
@@ -226,8 +244,18 @@
     
     .mobile-logo img {
       border-radius: 2rem;
-      border: 3px solid rgb(39, 39, 38);
+      border: 5px solid rgb(39, 39, 38);
       width: 55%;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 17vh;
+      color: rgba(36, 53, 81, 0.45);
+      background-color: rgb(13, 8, 36);
+      height: 6rem;
     }
     
 
@@ -251,6 +279,9 @@
       text-align: left;
     }
 
+    .section__text {
+      margin-top: 3rem;
+    }
 
     .section__text__p2 {
       text-align: left;
@@ -261,7 +292,7 @@
       font-size: 18px;
       color: rgba(0, 0, 0, 0.963);
       background-color: rgb(132, 132, 134);
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
     }
     
     .section__text__p2 {
@@ -273,7 +304,7 @@
     
     @keyframes animated-text{
       from{width: 0;}
-      to{width: 300px;}
+      to{width: 290px;}
     }
     
 
