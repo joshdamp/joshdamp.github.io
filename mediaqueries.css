@@ -15,7 +15,7 @@
     }
   }
   
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 990px) {
     .mobile-logo{
       display: none;
     }
@@ -53,19 +53,54 @@
     }
 
     .homepage{
+      font-size: 2rem;
       text-align: left;
     }
-    .section__text__p2{
-      text-align: left;
+    .section__text__p2 {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .name{
+      text-align: start;
+      font-size: 2.5rem;
+    }
+
+    .nav-links {
+      flex-direction: row;
+      gap: 5rem;
+      text-align: center;
+    }
+
+    footer nav {
+      height: fit-content;
+    }
+
+    .footer {
+      height: 30vh;
+    }
+    .section {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 2s, transform 2s;
+    }
+    
+    .section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
   
   @media screen and (max-width: 600px) {
-    
+        
     #desktop-nav {
       display: none;
     }
-    
+
+    #hamburger-nav {
+      display: flex;
+    }
+
     .mobile-logo {
       display: flex;
       justify-content: center;
@@ -73,8 +108,8 @@
     
     .mobile-logo img {
       border-radius: 2rem;
-      border: 3px solid gold;
-      width: 55%; /* Adjust as needed */
+      border: 3px solid rgb(39, 39, 38);
+      width: 55%;
     }
     
 
@@ -95,11 +130,44 @@
 
     .homepage{
       font-size: 2rem;
+      text-align: left;
+    }
+
+
+    .section__text__p2 {
+      text-align: left;
+      border-right: solid 3px rgba(255, 255, 255, 0.75);
+      white-space: nowrap;
+      overflow: hidden;    
+      font-family: 'Source Code Pro', monospace;  
+      font-size: 25px;
+      color: rgba(0, 0, 0, 0.963);
+      background-color: rgb(132, 132, 134);
+      margin-bottom: 1rem;
+    }
+    
+    .section__text__p2 {
+      animation: animated-text 4s steps(28,end) 1s 1 normal both,
+                 animated-cursor 600ms steps(29,end) infinite;
+    }
+    
+    /* text animation */
+    
+    @keyframes animated-text{
+      from{width: 0;}
+      to{width: 405px;}
+    }
+    
+
+    .name{
+      text-align: start;
+      font-size: 2.5rem;
     }
 
     article {
       font-size: 1rem;
     }
+
     footer nav {
       height: fit-content;
     }
@@ -110,7 +178,8 @@
 
     }
     .contact-info-container {
-      margin: 0;
+      margin: 2rem;
+
     }
     .contact-info-container p,
     .nav-links li a {
@@ -132,17 +201,132 @@
       height: 46vw;
       justify-content: center;
     }
-    .section__text__p2 {
-      font-size: 1.25rem;
-    }
-    .title {
-      font-size: 2rem;
-    }
+
     .text-container {
       text-align: justify;
     }
   
     .footer {
+
       height: 35vh;
     }
+
+  }
+
+  @media screen and (max-width: 450px) {
+        
+    #desktop-nav {
+      display: none;
+    }
+
+    .mobile-logo {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .mobile-logo img {
+      border-radius: 2rem;
+      border: 3px solid rgb(39, 39, 38);
+      width: 55%;
+    }
+    
+
+    #profile {
+      height: 80vh;
+    }
+
+    #profile,
+    #about,
+    #experience,
+    #contanct{
+      margin-bottom: 70px;
+    }
+
+    .section__pic-container{
+      display: none;
+    }
+
+    .homepage{
+      font-size: 2rem;
+      text-align: left;
+    }
+
+
+    .section__text__p2 {
+      text-align: left;
+      border-right: solid 3px rgba(255, 255, 255, 0.75);
+      white-space: nowrap;
+      overflow: hidden;    
+      font-family: 'Source Code Pro', monospace;  
+      font-size: 18px;
+      color: rgba(0, 0, 0, 0.963);
+      background-color: rgb(132, 132, 134);
+      margin-bottom: 1rem;
+    }
+    
+    .section__text__p2 {
+      animation: animated-text 4s steps(28,end) 1s 1 normal both,
+                 animated-cursor 600ms steps(29,end) infinite;
+    }
+    
+    /* text animation */
+    
+    @keyframes animated-text{
+      from{width: 0;}
+      to{width: 300px;}
+    }
+    
+
+    .name{
+      text-align: start;
+      font-size: 2.5rem;
+    }
+
+    article {
+      font-size: 1rem;
+    }
+
+    footer nav {
+      height: fit-content;
+    }
+    .about-containers,
+    .contact-info-upper-container,
+    .btn-container {
+      flex-wrap: wrap;
+
+    }
+    .contact-info-container {
+      margin: 2rem;
+
+    }
+    .contact-info-container p,
+    .nav-links li a {
+      font-size: 1rem;
+    }
+    .experience-sub-title {
+      font-size: 1.25rem;
+    }
+    .logo {
+      font-size: 1.0rem;
+    }
+    .nav-links {
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+    }
+    .section__pic-container {
+      width: auto;
+      height: 46vw;
+      justify-content: center;
+    }
+
+    .text-container {
+      text-align: justify;
+    }
+  
+    .footer {
+
+      height: 35vh;
+    }
+
   }
