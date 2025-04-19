@@ -233,9 +233,10 @@ nav:hover {
 }
 
 
-
 #contacts {
     background-color: #121212;
+    min-height: calc(100vh - 85px); /* Adjusts the contact section to fill the viewport minus footer height */
+    padding-bottom: 0; /* Remove bottom padding to avoid extra space */
 }
 
 #contacts h2 {
@@ -254,4 +255,16 @@ nav:hover {
 
 #contacts svg {
     color: #B3ECFF;
+}
+
+/* Custom Footer Styling */
+.footer-custom {
+    background-color: #1a1a2e00; /* Dark blue background */
+    border-top: 1px solid #4b4b8000; /* Subtle border at top */
+}
+
+.footer-text {
+    color: #B3ECFF; /* Light blue text */
+    font-size: 0.9rem;
+    line-height: 1.5;
 }
