@@ -1,0 +1,233 @@
+/*input.css*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #121212;
+    color: white;
+}
+
+nav {
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+}
+
+/* Add this if you want text shadow to ensure readability */
+.nav-links a, .navbar-brand {
+    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Only show background on hover if desired */
+nav:hover {
+    background-color: rgba(18, 18, 24, 0.2) !important;
+    backdrop-filter: blur(5px) !important;
+    transition: all 0.3s ease;
+}
+
+.nav-links a {
+    font-size: 16px;
+    font-weight: 500;
+    color: #F1EAFF;
+}
+
+.hero-title {
+    font-size: 36px;
+    font-weight: 600;
+    color: #F1EAFF;
+}
+
+.hero-subtitle {
+    font-size: 22px;
+    font-weight: 400;
+    color: #F1EAFF;
+}
+
+.profile-image-container {
+    position: relative;
+    width: 450px;
+    height: 500px;
+}
+
+.profile-image {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 60%; /* Smaller to reveal hexagon */
+    height: auto;
+}
+
+.hexagon-image {
+    position: absolute;
+    top: 50px; /* Adjusted to position below rectangle */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    width: 130%; /* Much larger to be visible */
+    height: auto;
+}
+
+.tab-btn {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    color: #B3ECFF;
+}
+
+.tab-btn.active:after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #B3ECFF;
+}
+
+.tab-content {
+    display: none;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.about-profile-image {
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(179, 236, 255, 0.3);
+}
+
+.tab-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tab-content::-webkit-scrollbar-track {
+    background: #2d2d2d;
+    border-radius: 10px;
+}
+
+.tab-content::-webkit-scrollbar-thumb {
+    background-color: #B3ECFF;
+    border-radius: 10px;
+}
+
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 1rem;
+}
+
+
+
+/* Updated CSS for the project section */
+#projects {
+    position: relative;
+    z-index: 1;
+    padding-top: 120px;
+    overflow: visible !important;
+}
+
+.project-card {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
+    overflow: visible !important;
+    cursor: pointer; /* Indicate the entire card is clickable */
+    border: 2px solid transparent; /* Default border */
+}
+
+.project-card:hover {
+    z-index: 100;
+    transform: scale(1.03); /* Slight scale on hover */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5); /* Stronger shadow on hover */
+    border: 2px solid #B3ECFF; /* Bright border to indicate interactivity */
+}
+
+.project-preview {
+    position: relative;
+    overflow: visible !important;
+}
+
+.main-image {
+    transition: opacity 0.3s ease;
+}
+
+.preview-container {
+    z-index: 20;
+}
+
+.preview-2-container {
+    top: -200px;
+    left: 0;
+    width: 100%;
+    z-index: 30;
+    pointer-events: none;
+}
+
+/* Style for the preview image wrapper */
+.preview-wrapper {
+    border: 1px solid #4a4a4a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Subtle hover effect to hint at previews */
+.project-card:hover .main-image {
+    opacity: 0.7; /* Dim the main image slightly on hover */
+}
+
+/* Show previews when project card is active (via click) */
+.project-card[data-active="true"] {
+    border: 2px solid #B3ECFF; /* Keep the border active when clicked */
+}
+
+.project-card[data-active="true"] .preview-container,
+.project-card[data-active="true"] .preview-2-container {
+    opacity: 1 !important;
+}
+
+.project-card[data-active="true"] .main-image {
+    opacity: 0 !important;
+}
+
+/* Ensure default state */
+.project-card .preview-container,
+.project-card .preview-2-container {
+    opacity: 0;
+}
+
+.project-card .main-image {
+    opacity: 1;
+}
+
+/* Project grid container adjustments */
+#projects .grid {
+    position: relative;
+    z-index: 1;
+}
+
+/* Style for GitHub link to ensure it’s visually distinct */
+.github-link {
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.github-link:hover {
+    background-color: rgba(179, 236, 255, 0.1); /* Subtle background on hover */
+}

@@ -1,0 +1,24 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Joshua Dampil's Portfolio Website",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/css/input.css -o ./public/css/styles.css --minify",
+    "watch:css": "tailwindcss -i ./src/css/input.css -o ./public/css/styles.css --watch",
+    "copy:js": "copyfiles -f src/js/main.js public/js/",
+    "copy:html": "copyfiles -f src/index.html public/",
+    "build": "npm run build:css && npm run copy:js && npm run copy:html",
+    "dev": "npm run watch:css & npm run copy:js && npm run copy:html"
+  },
+  "keywords": [],
+  "author": "Joshua Dampil",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "copyfiles": "^2.4.1",
+    "cross-env": "^7.0.3",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.3.1"
+  }
+}
