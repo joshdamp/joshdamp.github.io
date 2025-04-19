@@ -231,3 +231,27 @@ nav:hover {
 .github-link:hover {
     background-color: rgba(179, 236, 255, 0.1); /* Subtle background on hover */
 }
+
+
+
+#contacts {
+    background-color: #121212;
+}
+
+#contacts h2 {
+    color: #B3ECFF;
+}
+
+#contacts .bg-gray-800 {
+    background-color: #1E1E1E;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#contacts .bg-gray-800:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+#contacts svg {
+    color: #B3ECFF;
+}
