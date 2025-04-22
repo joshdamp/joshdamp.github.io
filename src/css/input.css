@@ -161,49 +161,70 @@ nav:hover {
     width: 100%; /* Expand underline on hover */
 }
 
-/* Updated CSS for the project section */
+
+/* Project section visibility fix */
 #projects {
     position: relative;
     z-index: 1;
-    padding-top: 120px;
-    overflow: visible !important;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    overflow: visible !important; /* Make sure overflow is visible */
+    display: block !important; /* Force display block */
+    visibility: visible !important; /* Ensure visibility */
+    opacity: 1 !important; /* Force opacity */
 }
 
+/* Ensure section title is visible */
+#projects h2.text-3xl {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin-bottom: 2rem !important;
+    color: #B3ECFF !important; /* Ensuring the color matches your primary */
+}
+/* Project card base styling */
 .project-card {
     position: relative;
     z-index: 1;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
-    overflow: visible !important;
-    cursor: pointer; /* Indicate the entire card is clickable */
-    border: 2px solid transparent; /* Default border */
+    overflow: hidden; /* Changed from visible to hidden */
+    cursor: pointer;
+    border: 2px solid transparent;
+    display: block; /* Ensure display is block */
+    visibility: visible; /* Force visibility */
+    opacity: 1; /* Ensure opacity is 1 */
 }
 
-.project-card:hover {
-    z-index: 100;
-    transform: scale(1.03); /* Slight scale on hover */
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5); /* Stronger shadow on hover */
-    border: 2px solid #B3ECFF; /* Bright border to indicate interactivity */
-}
-
+/* Project preview container */
 .project-preview {
     position: relative;
-    overflow: visible !important;
+    overflow: hidden; /* Changed from visible to hidden */
+    height: auto; /* Auto height */
 }
 
+/* Main image styling */
 .main-image {
+    transition: opacity 0.3s ease;
+    display: block; /* Ensure display */
+    width: 100%;
+    height: auto;
+}
+
+/* Preview containers */
+.preview-container, .preview-2-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 0;
     transition: opacity 0.3s ease;
 }
 
-.preview-container {
-    z-index: 20;
-}
-
+/* Specific positioning for the second preview */
 .preview-2-container {
-    top: -200px;
-    left: 0;
-    width: 100%;
-    z-index: 30;
-    pointer-events: none;
+    z-index: 3;
 }
 
 /* Style for the preview image wrapper */
@@ -294,4 +315,307 @@ nav:hover {
     color: #B3ECFF; /* Light blue text */
     font-size: 0.9rem;
     line-height: 1.5;
+}
+
+
+
+
+
+
+
+/* Mobile hero section improvements */
+@media screen and (max-width: 768px) {
+    /* Hero section structure */
+    #hero {
+        flex-direction: column;
+        text-align: center;
+        position: relative;
+        min-height: calc(100vh - 85px); /* Full viewport height minus nav */
+        justify-content: center;
+        padding-bottom: 100px; /* Space for social icons */
+    }
+    
+    /* Better container layout */
+    #hero .flex-col {
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    /* Fix the image & hexagon container */
+    .profile-image-container {
+        width: 280px;
+        height: 320px;
+        margin: 0 auto 30px;
+        position: relative;
+    }
+    
+    /* Adjust profile image position */
+    .profile-image {
+        width: 80%;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    /* Adjust hexagon position */
+    .hexagon-image {
+        width: 120%;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: -1;
+    }
+    
+    /* Text styling adjustments */
+    .hero-title {
+        font-size: 28px;
+        margin-bottom: 5px;
+    }
+    
+    .hero-subtitle {
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+    
+    /* Fix social icons position */
+    #hero .absolute {
+        position: absolute;
+        bottom: 40px;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
+    }
+    
+    /* Improved nav for mobile */
+    nav {
+        padding: 1rem;
+        position: relative;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+        position: absolute;
+        right: 1.5rem;
+        top: 1.5rem;
+        z-index: 100;
+    }
+    
+    .nav-links {
+        display: none;
+        width: 100%;
+        text-align: center;
+        background-color: rgba(18, 18, 24, 0.95);
+        position: absolute;
+        top: 60px;
+        left: 0;
+        padding: 1rem 0;
+    }
+    
+    .nav-links.mobile-active {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .nav-links a {
+        display: block;
+        padding: 0.75rem 0;
+        margin: 0;
+    }
+    
+}
+
+/* Extra small devices adjustment */
+@media screen and (max-width: 375px) {
+    .profile-image-container {
+        width: 240px;
+        height: 280px;
+    }
+    
+    .hero-title {
+        font-size: 24px;
+    }
+    
+    .hero-subtitle {
+        font-size: 18px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* About section responsive adjustments */
+@media screen and (max-width: 768px) {
+    /* Hide the profile image in the about section */
+    #about .md\:w-1\/3 {
+      display: none;
+    }
+    
+    /* Make the content area take full width */
+    #about .md\:w-2\/3 {
+      width: 100%;
+      padding-right: 0;
+    }
+    
+    /* Make text slightly smaller on mobile */
+    #about h3.text-lg {
+      font-size: 1rem; /* Slightly smaller heading */
+    }
+    
+    #about p.text-sm {
+      font-size: 0.85rem; /* Slightly smaller paragraph text */
+    }
+    
+    /* Make container a bit more compact */
+    #about {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+    
+    /* Make tab buttons smaller */
+    #about .tab-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+    
+    /* Skills grid more compact */
+    .skills-container {
+      grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+      gap: 0.75rem;
+    }
+    
+    /* Slightly more compact skill icons */
+    .skills-container .bg-gray-700 {
+      padding: 0.75rem;
+    }
+    
+    .skills-container img {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+  }
+  
+  /* Extra small devices adjustment */
+  @media screen and (max-width: 375px) {
+    #about {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    
+    #about .tab-btn {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+    }
+    
+    .skills-container {
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+      gap: 0.5rem;
+    }
+  }
+
+
+  
+
+  @media screen and (max-width: 768px) {
+    /* Ensure projects section is 100% visible */
+    #projects {
+        display: block !important;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important; /* Ensure it takes up necessary space */
+        min-height: auto !important; /* Override any min-height constraints */
+        width: 100% !important; /* Full width */
+    }
+    
+    /* Fix grid layout for mobile */
+    #projects .grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+        width: 100% !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Ensure each project card is visible */
+    .project-card {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        margin-bottom: 20px;
+        width: 100% !important;
+        height: auto !important;
+        /* Don't remove transform completely to preserve animations */
+        transform: translateY(0) !important; /* Reset any transform but allow hover effects */
+    }
+    
+    /* Fix project preview height for mobile */
+    .project-card .project-preview {
+        height: 200px !important;
+        overflow: hidden !important;
+        position: relative !important;
+        display: block !important;
+    }
+    
+    /* Make all images visible */
+    .project-card img {
+        display: block !important;
+        max-width: 100% !important;
+    }
+    
+    /* Fix main image size */
+    .project-card .main-image {
+        width: 100% !important;
+        height: 200px !important;
+        object-fit: cover !important;
+        display: block !important;
+    }
+    
+    /* Fix preview image containers while preserving animations */
+    .preview-container, .preview-2-container {
+        width: 100% !important;
+        height: 100% !important;
+        /* Don't force opacity to allow animations to work */
+    }
+    
+    /* Preserve hover and active state animations */
+    .project-card[data-active="true"] .preview-container,
+    .project-card[data-active="true"] .preview-2-container {
+        opacity: 1 !important;
+    }
+    
+    .project-card[data-active="true"] .main-image {
+        opacity: 0 !important;
+    }
+    
+    /* Add animation for card hover on mobile */
+    .project-card:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+        transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    }
+}
+
+/* Smaller device adjustments */
+@media screen and (max-width: 375px) {
+    .project-card .project-preview {
+        height: 160px !important;
+    }
+    
+    #projects {
+        padding-top: 30px;
+    }
 }
