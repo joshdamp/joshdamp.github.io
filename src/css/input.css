@@ -132,7 +132,34 @@ nav:hover {
     gap: 1rem;
 }
 
+/* Certificate Link Styling */
+.certificate-link {
+    color: #F1EAFF; /* Matches text-secondary color */
+    text-decoration: none; /* Remove default underline */
+    position: relative; /* For custom underline effect */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
 
+.certificate-link:hover {
+    color: #B3ECFF; /* Matches text-primary color on hover */
+    cursor: pointer; /* Pointer cursor to indicate clickability */
+}
+
+/* Custom underline effect on hover */
+.certificate-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: #B3ECFF; /* Matches primary color */
+    transition: width 0.3s ease; /* Smooth underline animation */
+}
+
+.certificate-link:hover::after {
+    width: 100%; /* Expand underline on hover */
+}
 
 /* Updated CSS for the project section */
 #projects {
