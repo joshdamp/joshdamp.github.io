@@ -362,3 +362,133 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if we're on mobile
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Set up mobile carousels for each project
+        setupMobileCarousels();
+    } else {
+        // Set up desktop project previews
+        setupDesktopPreviews();
+    }
+    
+    // Handle window resize events
+    window.addEventListener('resize', function() {
+        const nowMobile = window.innerWidth <= 768;
+        if (nowMobile !== isMobile) {
+            // Refresh the page to apply the correct layout
+            // Alternatively, you could dynamically update the DOM here
+            location.reload();
+        }
+    });
+    
+    // Setup tab functionality
+    setupTabs();
+});
+
+function setupMobileCarousels() {
+    // Get all project cards
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    projectCards.forEach((card, cardIndex) => {
+        const preview = card.querySelector('.project-preview');
+        const mainImg = preview.querySelector('.main-image');
+        const preview1 = preview.querySelector('.preview-1');
+        const preview2 = preview.querySelector('.preview-2');
+        
+        // Create a carousel container
+        const carousel = document.createElement('div');
+        carousel.className = 'mobile-carousel';
+        
+        // Create slides container
+        const slides = document.createElement('div');
+        slides.className = 'carousel-slides';
+        
+        // Create individual slides
+        const images = [mainImg, preview1, preview2].filter(img => img); // Filter out any null images
+        
+        images.forEach((img, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide';
+            
+            const newImg = document.createElement('img');
+            newImg.src = img.src;
+            newImg.alt = img.alt || `Project slide ${index + 1}`;
+            
+            slide.appendChild(newImg);
+            slides.appendChild(slide);
+        });
+        
+        carousel.appendChild(slides);
+        
+        // Create dot indicators
+        const dots = document.createElement('div');
+        dots.className = 'carousel-dots';
+        
+        images.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
+            dot.dataset.slide = index;
+            
+            dot.addEventListener('click', function() {
+                // Update active dot
+                dots.querySelectorAll('.carousel-dot').forEach(d => d.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Move slides
+                slides.style.transform = `translateX(-${index * 33.333}%)`;
+            });
+            
+            dots.appendChild(dot);
+        });
+        
+        carousel.appendChild(dots);
+        
+        // Set up touch swipe functionality
+        let startX, moveX;
+        let currentSlide = 0;
+        
+        carousel.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+        });
+        
+        carousel.addEventListener('touchmove', function(e) {
+            moveX = e.touches[0].clientX;
+        });
+        
+        carousel.addEventListener('touchend', function() {
+            if (!startX || !moveX) return;
+            
+            const diff = startX - moveX;
+            const threshold = 50; // Minimum swipe distance
+            
+            if (Math.abs(diff) < threshold) return;
+            
+            if (diff > 0 && currentSlide < images.length - 1) {
+                // Swipe left, go to next slide
+                currentSlide++;
+            } else if (diff < 0 && currentSlide > 0) {
+                // Swipe right, go to previous slide
+                currentSlide--;
+            }
+            
+            // Update dots
+            dots.querySelectorAll('.carousel-dot').forEach(d => d.classList.remove('active'));
+            dots.querySelector(`.carousel-dot[data-slide="${currentSlide}"]`).classList.add('active');
+            
+            // Move slides
+            slides.style.transform = `translateX(-${currentSlide * 33.333}%)`;
+            
+            // Reset
+            startX = null;
+            moveX = null;
+        });
+        
+        // Replace original preview with carousel
+        preview.innerHTML = '';
+        preview.appendChild(carousel);
+    });
+}

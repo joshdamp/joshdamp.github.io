@@ -162,69 +162,72 @@ nav:hover {
 }
 
 
-/* Project section visibility fix */
-#projects {
-    position: relative;
-    z-index: 1;
-    padding-top: 60px;
-    padding-bottom: 60px;
-    overflow: visible !important; /* Make sure overflow is visible */
-    display: block !important; /* Force display block */
-    visibility: visible !important; /* Ensure visibility */
-    opacity: 1 !important; /* Force opacity */
-}
 
-/* Ensure section title is visible */
-#projects h2.text-3xl {
+h2.text-3xl {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    margin-bottom: 2rem !important;
-    color: #B3ECFF !important; /* Ensuring the color matches your primary */
+  }
+  
+
+#projects {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
-/* Project card base styling */
+#projects {
+    position: relative;
+    z-index: 1;
+    padding-top: 120px;
+    overflow: visible !important;
+}
+
+#projects .grid {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.project-card {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
 .project-card {
     position: relative;
     z-index: 1;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
-    overflow: hidden; /* Changed from visible to hidden */
-    cursor: pointer;
-    border: 2px solid transparent;
-    display: block; /* Ensure display is block */
-    visibility: visible; /* Force visibility */
-    opacity: 1; /* Ensure opacity is 1 */
+    overflow: visible !important;
+    cursor: pointer; /* Indicate the entire card is clickable */
+    border: 2px solid transparent; /* Default border */
 }
 
-/* Project preview container */
+.project-card:hover {
+    z-index: 100;
+    transform: scale(1.03); /* Slight scale on hover */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5); /* Stronger shadow on hover */
+    border: 2px solid #B3ECFF; /* Bright border to indicate interactivity */
+}
+
 .project-preview {
     position: relative;
-    overflow: hidden; /* Changed from visible to hidden */
-    height: auto; /* Auto height */
+    overflow: visible !important;
 }
 
-/* Main image styling */
 .main-image {
     transition: opacity 0.3s ease;
-    display: block; /* Ensure display */
-    width: 100%;
-    height: auto;
 }
 
-/* Preview containers */
-.preview-container, .preview-2-container {
-    position: absolute;
-    top: 0;
+.preview-container {
+    z-index: 20;
+}
+
+.preview-2-container {
+    top: -200px;
     left: 0;
     width: 100%;
-    height: 100%;
-    z-index: 2;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-/* Specific positioning for the second preview */
-.preview-2-container {
-    z-index: 3;
+    z-index: 30;
+    pointer-events: none;
 }
 
 /* Style for the preview image wrapper */
@@ -504,6 +507,29 @@ nav:hover {
       height: 2.5rem;
       width: 2.5rem;
     }
+
+    /* Fix for tab containers in about section */
+    #about .tab-content {
+        height: 300px !important; /* Set fixed height for all tabs */
+        min-height: 300px;
+        max-height: 300px;
+        overflow-y: auto;
+        width: 100%;
+    }
+    
+    /* Ensure consistent background and styling */
+    #about .tab-content .bg-gray-800 {
+        height: 100%;
+        width: 100%;
+        padding: 1rem;
+    }
+
+    #background.tab-content .bg-gray-800,
+    #skills.tab-content .bg-gray-800,
+    #certificate.tab-content .bg-gray-800 {
+        max-height: none;
+        height: 100%;
+    }
   }
   
   /* Extra small devices adjustment */
@@ -528,19 +554,20 @@ nav:hover {
   
 
   @media screen and (max-width: 768px) {
-    /* Ensure projects section is 100% visible */
+    /* Ensure projects section is visible */
     #projects {
         display: block !important;
-        padding-top: 40px;
-        padding-bottom: 40px;
         visibility: visible !important;
         opacity: 1 !important;
-        height: auto !important; /* Ensure it takes up necessary space */
-        min-height: auto !important; /* Override any min-height constraints */
-        width: 100% !important; /* Full width */
+        height: auto !important;
+        padding-top: 40px;
+        padding-bottom: 60px;
+        overflow: visible !important;
+        position: relative;
+        z-index: 10;
     }
     
-    /* Fix grid layout for mobile */
+    /* Fix grid layout */
     #projects .grid {
         display: grid !important;
         grid-template-columns: 1fr !important;
@@ -550,64 +577,86 @@ nav:hover {
         opacity: 1 !important;
     }
     
-    /* Ensure each project card is visible */
+    /* Project card styling */
     .project-card {
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
+        width: 100% !important;
         margin-bottom: 20px;
-        width: 100% !important;
-        height: auto !important;
-        /* Don't remove transform completely to preserve animations */
-        transform: translateY(0) !important; /* Reset any transform but allow hover effects */
-    }
-    
-    /* Fix project preview height for mobile */
-    .project-card .project-preview {
-        height: 200px !important;
         overflow: hidden !important;
-        position: relative !important;
-        display: block !important;
+        position: relative;
     }
     
-    /* Make all images visible */
-    .project-card img {
-        display: block !important;
-        max-width: 100% !important;
-    }
-    
-    /* Fix main image size */
-    .project-card .main-image {
-        width: 100% !important;
+    /* Mobile-optimized preview container */
+    .project-preview {
+        position: relative;
         height: 200px !important;
-        object-fit: cover !important;
-        display: block !important;
+        width: 100%;
+        overflow: hidden !important;
     }
     
-    /* Fix preview image containers while preserving animations */
-    .preview-container, .preview-2-container {
-        width: 100% !important;
-        height: 100% !important;
-        /* Don't force opacity to allow animations to work */
+    /* Hide original preview system on mobile */
+    .preview-container,
+    .preview-2-container {
+        display: none;
     }
     
-    /* Preserve hover and active state animations */
-    .project-card[data-active="true"] .preview-container,
-    .project-card[data-active="true"] .preview-2-container {
-        opacity: 1 !important;
+    /* New mobile carousel system */
+    .mobile-carousel {
+        position: relative;
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
     }
     
-    .project-card[data-active="true"] .main-image {
-        opacity: 0 !important;
+    .carousel-slides {
+        display: flex;
+        width: 300%;
+        height: 100%;
+        transition: transform 0.3s ease;
     }
     
-    /* Add animation for card hover on mobile */
-    .project-card:hover {
-        transform: translateY(-5px) !important;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
-        transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    .carousel-slide {
+        width: 33.333%;
+        height: 100%;
+        flex-shrink: 0;
     }
+    
+    .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    /* Dot indicators */
+    .carousel-dots {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        z-index: 20;
+    }
+    
+    .carousel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        margin: 0 3px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    
+    .carousel-dot.active {
+        background: #B3ECFF;
+    }
+    
 }
+
+
 
 /* Smaller device adjustments */
 @media screen and (max-width: 375px) {
