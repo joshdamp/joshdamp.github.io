@@ -1,10 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Portfolio website loaded successfully');
     
-    // Initialize scroll observer for section animations
     initScrollAnimations();
     
-    // Navigation hover effects and smooth scrolling
+
+    initNavigation();
+    
+
+    setupTabs();
+    
+
+    setupProjectCards();
+    
+
+    setupMobileMenu();
+    
+
+    handleWindowResize();
+});
+
+// Handle navigation interaction and smooth scrolling
+function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-links a');
     navLinks.forEach(link => {
         link.addEventListener('mouseenter', function() {
@@ -19,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const targetElement = document.getElementById(targetId);
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 100,
+                        top: targetElement.offsetTop - 25,
                         behavior: 'smooth'
                     });
                 }
@@ -27,14 +43,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Hero section initial animations
-    const heroSection = document.querySelector('section.container.mx-auto.px-6.py-16.flex.items-center');
+    // Initial animations for hero elements
     const heroTitle = document.querySelector('.hero-title');
     const heroSubtitle = document.querySelector('.hero-subtitle');
     const profileImage = document.querySelector('.profile-image-container');
     const socialIcons = document.querySelector('.absolute.bottom-4.right-20');
     
-    // Add hero section to our tracking
+    // Hero section initial animations
+    const heroSection = document.querySelector('section.container.mx-auto.px-6.py-16.flex.items-center');
     if (heroSection) {
         heroSection.classList.add('animated-section');
         heroSection.dataset.sectionId = 'hero';
@@ -46,8 +62,10 @@ document.addEventListener('DOMContentLoaded', function() {
     animateElement(heroTitle, 500, 'translateX(-20px)', 'translateX(0)');
     animateElement(heroSubtitle, 700, 'translateX(-20px)', 'translateX(0)');
     animateElement(socialIcons, 900, 'translateY(20px)', 'translateY(0)');
-    
-    // Tab functionality
+}
+
+// Set up tab functionality
+function setupTabs() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
     
@@ -60,24 +78,80 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById(tabId).classList.add('active');
         });
     });
+}
 
-    // Project Card Preview Functionality
-    initProjectCardPreviews();
+// Mobile menu toggle functionality
+function setupMobileMenu() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
     
-    // Add CSS for preview visibility
-    const style = document.createElement('style');
-    document.head.appendChild(style);
-});
+    if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('mobile-active');
+            
+            // Update button text based on menu state
+            if (navLinks.classList.contains('mobile-active')) {
+                mobileMenuBtn.textContent = '✕'; // Close icon
+            } else {
+                mobileMenuBtn.textContent = '☰'; // Hamburger icon
+            }
+        });
+        
+        // Close menu when clicking a link
+        const links = document.querySelectorAll('.nav-links a');
+        links.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('mobile-active');
+                if (mobileMenuBtn.textContent === '✕') {
+                    mobileMenuBtn.textContent = '☰';
+                }
+            });
+        });
+    }
+}
 
-// Function to handle project card previews
-function initProjectCardPreviews() {
+// Master function to set up project cards for both desktop and mobile
+function setupProjectCards() {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Set up mobile carousels for each project
+        setupMobileCarousels();
+    } else {
+        // Set up desktop project previews
+        setupDesktopPreviews();
+    }
+}
+
+// Handle window resize events
+function handleWindowResize() {
+    let isMobile = window.innerWidth <= 768;
+    
+    window.addEventListener('resize', function() {
+        const nowMobile = window.innerWidth <= 768;
+        if (nowMobile !== isMobile) {
+            // Update the state
+            isMobile = nowMobile;
+            
+            // Refresh the page to apply the correct layout
+            // You could alternatively update the DOM dynamically here
+            location.reload();
+        }
+    });
+}
+
+// Function to set up desktop project previews
+function setupDesktopPreviews() {
     const projectCards = document.querySelectorAll('.project-card');
     
     projectCards.forEach(card => {
         // Click event for the entire card
-        card.addEventListener('click', () => {
-            const isActive = card.getAttribute('data-active') === 'true';
-            card.setAttribute('data-active', !isActive);
+        card.addEventListener('click', (e) => {
+            // Only toggle if not clicking on a link
+            if (!e.target.closest('.github-link')) {
+                const isActive = card.getAttribute('data-active') === 'true';
+                card.setAttribute('data-active', !isActive);
+            }
         });
 
         // Prevent GitHub link clicks from toggling the card
@@ -87,6 +161,114 @@ function initProjectCardPreviews() {
                 e.stopPropagation(); // Prevent the card click event from firing
             });
         }
+    });
+}
+
+// Function to set up mobile carousels
+function setupMobileCarousels() {
+    // Get all project cards
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    projectCards.forEach((card, cardIndex) => {
+        const preview = card.querySelector('.project-preview');
+        if (!preview) return; // Skip if preview container doesn't exist
+        
+        const mainImg = preview.querySelector('.main-image');
+        const preview1 = preview.querySelector('.preview-1');
+        const preview2 = preview.querySelector('.preview-2');
+        
+        // Create a carousel container
+        const carousel = document.createElement('div');
+        carousel.className = 'mobile-carousel';
+        
+        // Create slides container
+        const slides = document.createElement('div');
+        slides.className = 'carousel-slides';
+        
+        // Create individual slides
+        const images = [mainImg, preview1, preview2].filter(img => img); // Filter out any null images
+        
+        images.forEach((img, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide';
+            
+            const newImg = document.createElement('img');
+            newImg.src = img.src;
+            newImg.alt = img.alt || `Project slide ${index + 1}`;
+            
+            slide.appendChild(newImg);
+            slides.appendChild(slide);
+        });
+        
+        carousel.appendChild(slides);
+        
+        // Create dot indicators
+        const dots = document.createElement('div');
+        dots.className = 'carousel-dots';
+        
+        images.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
+            dot.dataset.slide = index;
+            
+            dot.addEventListener('click', function() {
+                // Update active dot
+                dots.querySelectorAll('.carousel-dot').forEach(d => d.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Move slides
+                slides.style.transform = `translateX(-${index * 33.333}%)`;
+            });
+            
+            dots.appendChild(dot);
+        });
+        
+        carousel.appendChild(dots);
+        
+        // Set up touch swipe functionality
+        let startX, moveX;
+        let currentSlide = 0;
+        
+        carousel.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+        });
+        
+        carousel.addEventListener('touchmove', function(e) {
+            moveX = e.touches[0].clientX;
+        });
+        
+        carousel.addEventListener('touchend', function() {
+            if (!startX || !moveX) return;
+            
+            const diff = startX - moveX;
+            const threshold = 50; // Minimum swipe distance
+            
+            if (Math.abs(diff) < threshold) return;
+            
+            if (diff > 0 && currentSlide < images.length - 1) {
+                // Swipe left, go to next slide
+                currentSlide++;
+            } else if (diff < 0 && currentSlide > 0) {
+                // Swipe right, go to previous slide
+                currentSlide--;
+            }
+            
+            // Update dots
+            dots.querySelectorAll('.carousel-dot').forEach(d => d.classList.remove('active'));
+            dots.querySelector(`.carousel-dot[data-slide="${currentSlide}"]`).classList.add('active');
+            
+            // Move slides
+            slides.style.transform = `translateX(-${currentSlide * 33.333}%)`;
+            
+            // Reset
+            startX = null;
+            moveX = null;
+        });
+        
+        // Replace original preview with carousel
+        const originalContent = preview.innerHTML;
+        preview.innerHTML = '';
+        preview.appendChild(carousel);
     });
 }
 
@@ -188,7 +370,7 @@ function initScrollAnimations() {
         });
     }, {
         rootMargin: '-10% 0px',
-        threshold: [0.3, 0.7] // Check at multiple thresholds for smoother transitions
+        threshold: [0.3, 0.7] 
     });
     
     // Start observing all sections
@@ -340,155 +522,5 @@ function animateInnerElements(sectionId) {
             el.style.transform = 'translateY(0)';
             el.dataset.initialState = 'visible';
         }, totalDelay);
-    });
-}
-
-// Mobile menu toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-    
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', function() {
-            navLinks.classList.toggle('mobile-active');
-        });
-    }
-    
-    // Close menu when clicking a link
-    const links = document.querySelectorAll('.nav-links a');
-    links.forEach(link => {
-        link.addEventListener('click', function() {
-            navLinks.classList.remove('mobile-active');
-        });
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if we're on mobile
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile) {
-        // Set up mobile carousels for each project
-        setupMobileCarousels();
-    } else {
-        // Set up desktop project previews
-        setupDesktopPreviews();
-    }
-    
-    // Handle window resize events
-    window.addEventListener('resize', function() {
-        const nowMobile = window.innerWidth <= 768;
-        if (nowMobile !== isMobile) {
-            // Refresh the page to apply the correct layout
-            // Alternatively, you could dynamically update the DOM here
-            location.reload();
-        }
-    });
-    
-    // Setup tab functionality
-    setupTabs();
-});
-
-function setupMobileCarousels() {
-    // Get all project cards
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    projectCards.forEach((card, cardIndex) => {
-        const preview = card.querySelector('.project-preview');
-        const mainImg = preview.querySelector('.main-image');
-        const preview1 = preview.querySelector('.preview-1');
-        const preview2 = preview.querySelector('.preview-2');
-        
-        // Create a carousel container
-        const carousel = document.createElement('div');
-        carousel.className = 'mobile-carousel';
-        
-        // Create slides container
-        const slides = document.createElement('div');
-        slides.className = 'carousel-slides';
-        
-        // Create individual slides
-        const images = [mainImg, preview1, preview2].filter(img => img); // Filter out any null images
-        
-        images.forEach((img, index) => {
-            const slide = document.createElement('div');
-            slide.className = 'carousel-slide';
-            
-            const newImg = document.createElement('img');
-            newImg.src = img.src;
-            newImg.alt = img.alt || `Project slide ${index + 1}`;
-            
-            slide.appendChild(newImg);
-            slides.appendChild(slide);
-        });
-        
-        carousel.appendChild(slides);
-        
-        // Create dot indicators
-        const dots = document.createElement('div');
-        dots.className = 'carousel-dots';
-        
-        images.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
-            dot.dataset.slide = index;
-            
-            dot.addEventListener('click', function() {
-                // Update active dot
-                dots.querySelectorAll('.carousel-dot').forEach(d => d.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Move slides
-                slides.style.transform = `translateX(-${index * 33.333}%)`;
-            });
-            
-            dots.appendChild(dot);
-        });
-        
-        carousel.appendChild(dots);
-        
-        // Set up touch swipe functionality
-        let startX, moveX;
-        let currentSlide = 0;
-        
-        carousel.addEventListener('touchstart', function(e) {
-            startX = e.touches[0].clientX;
-        });
-        
-        carousel.addEventListener('touchmove', function(e) {
-            moveX = e.touches[0].clientX;
-        });
-        
-        carousel.addEventListener('touchend', function() {
-            if (!startX || !moveX) return;
-            
-            const diff = startX - moveX;
-            const threshold = 50; // Minimum swipe distance
-            
-            if (Math.abs(diff) < threshold) return;
-            
-            if (diff > 0 && currentSlide < images.length - 1) {
-                // Swipe left, go to next slide
-                currentSlide++;
-            } else if (diff < 0 && currentSlide > 0) {
-                // Swipe right, go to previous slide
-                currentSlide--;
-            }
-            
-            // Update dots
-            dots.querySelectorAll('.carousel-dot').forEach(d => d.classList.remove('active'));
-            dots.querySelector(`.carousel-dot[data-slide="${currentSlide}"]`).classList.add('active');
-            
-            // Move slides
-            slides.style.transform = `translateX(-${currentSlide * 33.333}%)`;
-            
-            // Reset
-            startX = null;
-            moveX = null;
-        });
-        
-        // Replace original preview with carousel
-        preview.innerHTML = '';
-        preview.appendChild(carousel);
     });
 }
