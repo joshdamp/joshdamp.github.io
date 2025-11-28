@@ -17,8 +17,8 @@
   --color-card-hover: rgba(0, 0, 0, 0.5);
   
   /* Title Colors */
-  --color-title-brand: #B3ECFF;
-  --color-title-hero: #FF6B9D;
+  --color-title-brand: #23d090;
+  --color-title-hero: #23d090;
   --color-title-about: #A78BFA;
   --color-title-projects: #34D399;
   --color-title-contacts: #FBBF24;
@@ -38,8 +38,8 @@ body.light-mode {
   --color-card-hover: rgba(31, 41, 55, 0.08);
   
   /* Title Colors for Light Mode */
-  --color-title-brand: #1F2937;
-  --color-title-hero: #D63384;
+  --color-title-brand: #0d674b;
+  --color-title-hero: #059669;
   --color-title-about: #7C3AED;
   --color-title-projects: #059669;
   --color-title-contacts: #DC2626;
