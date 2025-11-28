@@ -192,6 +192,21 @@ nav:hover {
   color: var(--color-title-contacts);
 }
 
+/* Social Icons */
+.social-icon {
+  color: var(--color-accent);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icon:hover {
+  color: var(--color-accent-hover);
+  transform: scale(1.2);
+}
+
+body.light-mode .social-icon {
+  color: var(--color-accent);
+}
+
 /* ============================================================================
    TAB STYLES
    ============================================================================ */
