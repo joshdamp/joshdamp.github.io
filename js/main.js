@@ -1,526 +1,390 @@
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Portfolio website loaded successfully');
-    
-    initScrollAnimations();
-    
+/* ============================================================================
+   PORTFOLIO - MAIN JAVASCRIPT FILE
+   Organized, modular structure for better maintainability
+   ============================================================================ */
 
-    initNavigation();
+/* ============================================================================
+   THEME MANAGER MODULE
+   Handles dark/light mode toggle and persistence
+   ============================================================================ */
+const ThemeManager = (() => {
+  const STORAGE_KEY = 'portfolio-theme';
+  const DARK_MODE_CLASS = 'dark-mode';
+  const LIGHT_MODE_CLASS = 'light-mode';
+  
+  // Initialize theme on page load
+  const init = () => {
+    const savedTheme = localStorage.getItem(STORAGE_KEY) || 'dark';
+    applyTheme(savedTheme);
+    attachToggleListener();
+  };
+  
+  // Apply theme to the document
+  const applyTheme = (theme) => {
+    const body = document.body;
     
-
-    setupTabs();
-    
-
-    setupProjectCards();
-    
-
-    setupMobileMenu();
-    
-
-    handleWindowResize();
-});
-
-// Handle navigation interaction and smooth scrolling
-function initNavigation() {
-    const navLinks = document.querySelectorAll('.nav-links a');
-    navLinks.forEach(link => {
-        link.addEventListener('mouseenter', function() {
-            this.style.transition = 'color 0.3s ease';
-        });
-        
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href.startsWith('#')) {
-                e.preventDefault();
-                const targetId = href.substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 25,
-                        behavior: 'smooth'
-                    });
-                }
-            }
-        });
-    });
-    
-    // Initial animations for hero elements
-    const heroTitle = document.querySelector('.hero-title');
-    const heroSubtitle = document.querySelector('.hero-subtitle');
-    const profileImage = document.querySelector('.profile-image-container');
-    const socialIcons = document.querySelector('.absolute.bottom-4.right-20');
-    
-    // Hero section initial animations
-    const heroSection = document.querySelector('section.container.mx-auto.px-6.py-16.flex.items-center');
-    if (heroSection) {
-        heroSection.classList.add('animated-section');
-        heroSection.dataset.sectionId = 'hero';
-        heroSection.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    if (theme === 'light') {
+      body.classList.remove(DARK_MODE_CLASS);
+      body.classList.add(LIGHT_MODE_CLASS);
+    } else {
+      body.classList.remove(LIGHT_MODE_CLASS);
+      body.classList.add(DARK_MODE_CLASS);
     }
     
-    // Initial animations for hero elements
-    animateElement(profileImage, 300, 'translateY(20px)', 'translateY(0)');
-    animateElement(heroTitle, 500, 'translateX(-20px)', 'translateX(0)');
-    animateElement(heroSubtitle, 700, 'translateX(-20px)', 'translateX(0)');
-    animateElement(socialIcons, 900, 'translateY(20px)', 'translateY(0)');
-}
+    updateThemeButton(theme);
+    localStorage.setItem(STORAGE_KEY, theme);
+  };
+  
+  // Update theme toggle button icon and text
+  const updateThemeButton = (theme) => {
+    const btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.innerHTML = theme === 'light' ? '☀️' : '🌙';
+      btn.setAttribute('aria-label', theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+    }
+  };
+  
+  // Attach click listener to toggle button
+  const attachToggleListener = () => {
+    const toggleBtn = document.getElementById('themeToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const currentTheme = localStorage.getItem(STORAGE_KEY) || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+      });
+    }
+  };
+  
+  return { init };
+})();
 
-// Set up tab functionality
-function setupTabs() {
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-    
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            tabContents.forEach(content => content.classList.remove('active'));
-            const tabId = button.getAttribute('data-tab');
-            document.getElementById(tabId).classList.add('active');
-        });
+/* ============================================================================
+   NAVIGATION MODULE
+   Handles smooth scrolling, mobile menu, and nav interactions
+   ============================================================================ */
+const Navigation = (() => {
+  // Initialize navigation features
+  const init = () => {
+    setupSmoothScroll();
+    setupMobileMenu();
+    setupNavHoverEffects();
+  };
+  
+  // Smooth scroll to sections
+  const setupSmoothScroll = () => {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          const targetId = href.substring(1);
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 25,
+              behavior: 'smooth'
+            });
+            // Close mobile menu if open
+            closeMobileMenu();
+          }
+        }
+      });
     });
-}
-
-// Mobile menu toggle functionality
-function setupMobileMenu() {
+  };
+  
+  // Mobile menu toggle functionality
+  const setupMobileMenu = () => {
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
     
     if (mobileMenuBtn && navLinks) {
-        mobileMenuBtn.addEventListener('click', function() {
-            navLinks.classList.toggle('mobile-active');
-            
-            // Update button text based on menu state
-            if (navLinks.classList.contains('mobile-active')) {
-                mobileMenuBtn.textContent = '✕'; // Close icon
-            } else {
-                mobileMenuBtn.textContent = '☰'; // Hamburger icon
-            }
-        });
-        
-        // Close menu when clicking a link
-        const links = document.querySelectorAll('.nav-links a');
-        links.forEach(link => {
-            link.addEventListener('click', function() {
-                navLinks.classList.remove('mobile-active');
-                if (mobileMenuBtn.textContent === '✕') {
-                    mobileMenuBtn.textContent = '☰';
-                }
-            });
-        });
+      mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('mobile-active');
+        updateMobileMenuButton(mobileMenuBtn, navLinks.classList.contains('mobile-active'));
+      });
+      
+      // Close menu when clicking a link
+      const links = document.querySelectorAll('.nav-links a');
+      links.forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+      });
     }
-}
-
-// Master function to set up project cards for both desktop and mobile
-function setupProjectCards() {
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile) {
-        // Set up mobile carousels for each project
-        setupMobileCarousels();
-    } else {
-        // Set up desktop project previews
-        setupDesktopPreviews();
+  };
+  
+  // Close mobile menu
+  const closeMobileMenu = () => {
+    const navLinks = document.querySelector('.nav-links');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    if (navLinks && mobileMenuBtn) {
+      navLinks.classList.remove('mobile-active');
+      updateMobileMenuButton(mobileMenuBtn, false);
     }
-}
-
-// Handle window resize events
-function handleWindowResize() {
-    let isMobile = window.innerWidth <= 768;
-    
-    window.addEventListener('resize', function() {
-        const nowMobile = window.innerWidth <= 768;
-        if (nowMobile !== isMobile) {
-            // Update the state
-            isMobile = nowMobile;
-            
-            // Refresh the page to apply the correct layout
-            // You could alternatively update the DOM dynamically here
-            location.reload();
+  };
+  
+  // Update mobile menu button appearance
+  const updateMobileMenuButton = (btn, isOpen) => {
+    btn.textContent = isOpen ? '✕' : '☰';
+  };
+  
+  // Navigation hover effects
+  const setupNavHoverEffects = () => {
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (nav) {
+        if (window.scrollY > 50) {
+          nav.style.backgroundColor = 'var(--color-nav-bg)';
+          nav.style.backdropFilter = 'blur(5px)';
+        } else {
+          nav.style.backgroundColor = 'transparent';
+          nav.style.backdropFilter = 'none';
         }
+      }
     });
-}
+  };
+  
+  return { init };
+})();
 
-// Function to set up desktop project previews
-function setupDesktopPreviews() {
+/* ============================================================================
+   TABS MODULE
+   Handles tab switching in the About section
+   ============================================================================ */
+const Tabs = (() => {
+  const init = () => {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons and contents
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        // Add active class to clicked button and corresponding content
+        button.classList.add('active');
+        const tabId = button.getAttribute('data-tab');
+        const tabContent = document.getElementById(tabId);
+        if (tabContent) {
+          tabContent.classList.add('active');
+        }
+      });
+    });
+  };
+  
+  return { init };
+})();
+
+/* ============================================================================
+   PROJECTS MODULE
+   Handles project card interactions and preview carousel
+   ============================================================================ */
+const Projects = (() => {
+  const init = () => {
+    const isMobile = window.innerWidth <= 768;
+    isMobile ? setupMobileCarousels() : setupDesktopPreviews();
+    
+    // Handle resize
+    window.addEventListener('resize', handleResize);
+  };
+  
+  // Setup desktop project previews
+  const setupDesktopPreviews = () => {
     const projectCards = document.querySelectorAll('.project-card');
     
     projectCards.forEach(card => {
-        // Click event for the entire card
-        card.addEventListener('click', (e) => {
-            // Only toggle if not clicking on a link
-            if (!e.target.closest('.github-link')) {
-                const isActive = card.getAttribute('data-active') === 'true';
-                card.setAttribute('data-active', !isActive);
-            }
-        });
-
-        // Prevent GitHub link clicks from toggling the card
-        const githubLink = card.querySelector('.github-link');
-        if (githubLink) {
-            githubLink.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent the card click event from firing
-            });
+      card.addEventListener('click', (e) => {
+        if (!e.target.closest('.github-link')) {
+          const isActive = card.getAttribute('data-active') === 'true';
+          card.setAttribute('data-active', !isActive);
         }
+      });
     });
-}
-
-// Function to set up mobile carousels
-function setupMobileCarousels() {
-    // Get all project cards
+  };
+  
+  // Setup mobile carousels
+  const setupMobileCarousels = () => {
     const projectCards = document.querySelectorAll('.project-card');
     
-    projectCards.forEach((card, cardIndex) => {
-        const preview = card.querySelector('.project-preview');
-        if (!preview) return; // Skip if preview container doesn't exist
-        
-        const mainImg = preview.querySelector('.main-image');
-        const preview1 = preview.querySelector('.preview-1');
-        const preview2 = preview.querySelector('.preview-2');
-        
-        // Create a carousel container
-        const carousel = document.createElement('div');
-        carousel.className = 'mobile-carousel';
-        
-        // Create slides container
-        const slides = document.createElement('div');
-        slides.className = 'carousel-slides';
-        
-        // Create individual slides
-        const images = [mainImg, preview1, preview2].filter(img => img); // Filter out any null images
-        
-        images.forEach((img, index) => {
-            const slide = document.createElement('div');
-            slide.className = 'carousel-slide';
-            
-            const newImg = document.createElement('img');
-            newImg.src = img.src;
-            newImg.alt = img.alt || `Project slide ${index + 1}`;
-            
-            slide.appendChild(newImg);
-            slides.appendChild(slide);
-        });
-        
-        carousel.appendChild(slides);
-        
-        // Create dot indicators
-        const dots = document.createElement('div');
-        dots.className = 'carousel-dots';
-        
-        images.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
-            dot.dataset.slide = index;
-            
-            dot.addEventListener('click', function() {
-                // Update active dot
-                dots.querySelectorAll('.carousel-dot').forEach(d => d.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Move slides
-                slides.style.transform = `translateX(-${index * 33.333}%)`;
-            });
-            
-            dots.appendChild(dot);
-        });
-        
-        carousel.appendChild(dots);
-        
-        // Set up touch swipe functionality
-        let startX, moveX;
-        let currentSlide = 0;
-        
-        carousel.addEventListener('touchstart', function(e) {
-            startX = e.touches[0].clientX;
-        });
-        
-        carousel.addEventListener('touchmove', function(e) {
-            moveX = e.touches[0].clientX;
-        });
-        
-        carousel.addEventListener('touchend', function() {
-            if (!startX || !moveX) return;
-            
-            const diff = startX - moveX;
-            const threshold = 50; // Minimum swipe distance
-            
-            if (Math.abs(diff) < threshold) return;
-            
-            if (diff > 0 && currentSlide < images.length - 1) {
-                // Swipe left, go to next slide
-                currentSlide++;
-            } else if (diff < 0 && currentSlide > 0) {
-                // Swipe right, go to previous slide
-                currentSlide--;
-            }
-            
-            // Update dots
-            dots.querySelectorAll('.carousel-dot').forEach(d => d.classList.remove('active'));
-            dots.querySelector(`.carousel-dot[data-slide="${currentSlide}"]`).classList.add('active');
-            
-            // Move slides
-            slides.style.transform = `translateX(-${currentSlide * 33.333}%)`;
-            
-            // Reset
-            startX = null;
-            moveX = null;
-        });
-        
-        // Replace original preview with carousel
-        const originalContent = preview.innerHTML;
-        preview.innerHTML = '';
-        preview.appendChild(carousel);
+    projectCards.forEach((card) => {
+      const preview = card.querySelector('.project-preview');
+      if (!preview) return;
+      
+      const mainImg = preview.querySelector('.main-image');
+      const preview1 = preview.querySelector('.preview-1');
+      const preview2 = preview.querySelector('.preview-2');
+      
+      // Create carousel structure
+      const carousel = createCarousel([mainImg, preview1, preview2]);
+      preview.innerHTML = '';
+      preview.appendChild(carousel);
     });
-}
-
-// Helper function to animate elements
-function animateElement(element, delay, fromTransform, toTransform) {
-    if (element) {
-        element.style.opacity = '0';
-        element.style.transform = fromTransform;
-        element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-        setTimeout(() => {
-            element.style.opacity = '1';
-            element.style.transform = toTransform;
-        }, delay);
-    }
-}
-
-// Enhanced scroll animation system with section hide effect
-function initScrollAnimations() {
-    // Mark all major sections for animation
-    const sections = [
-        {
-            id: 'hero',
-            element: document.querySelector('section.container.mx-auto.px-6.py-16.flex.items-center'),
-            threshold: 0.3,
-            enterAnimation: 'translateY(0)',
-            exitAnimation: 'translateY(-30px)'
-        },
-        {
-            id: 'about',
-            element: document.getElementById('about'),
-            threshold: 0.3,
-            enterAnimation: 'translateY(0)',
-            exitAnimation: 'translateY(-30px)'
-        },
-        {
-            id: 'projects',
-            element: document.getElementById('projects'),
-            threshold: 0.3,
-            enterAnimation: 'translateY(0)',
-            exitAnimation: 'translateY(-30px)'
-        },
-        {
-            id: 'contacts',
-            element: document.getElementById('contacts'),
-            threshold: 0.3,
-            enterAnimation: 'translateY(0)',
-            exitAnimation: 'translateY(-30px)'
+  };
+  
+  // Create carousel element
+  const createCarousel = (images) => {
+    const carousel = document.createElement('div');
+    carousel.className = 'mobile-carousel';
+    
+    // Create slides
+    const slides = document.createElement('div');
+    slides.className = 'carousel-slides';
+    
+    const validImages = images.filter(img => img);
+    validImages.forEach((img) => {
+      const slide = document.createElement('div');
+      slide.className = 'carousel-slide';
+      
+      const newImg = document.createElement('img');
+      newImg.src = img.src;
+      newImg.alt = img.alt || 'Project preview';
+      
+      slide.appendChild(newImg);
+      slides.appendChild(slide);
+    });
+    
+    carousel.appendChild(slides);
+    
+    // Create dots
+    const dots = document.createElement('div');
+    dots.className = 'carousel-dots';
+    let currentSlide = 0;
+    
+    validImages.forEach((_, index) => {
+      const dot = document.createElement('div');
+      dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
+      dot.dataset.slide = index;
+      
+      dot.addEventListener('click', () => {
+        currentSlide = index;
+        updateCarousel(slides, dots, index, validImages.length);
+      });
+      
+      dots.appendChild(dot);
+    });
+    
+    carousel.appendChild(dots);
+    
+    // Setup touch swipe
+    setupSwipe(carousel, slides, dots, validImages.length, (newIndex) => {
+      currentSlide = newIndex;
+    });
+    
+    return carousel;
+  };
+  
+  // Update carousel position
+  const updateCarousel = (slides, dots, index, total) => {
+    slides.style.transform = `translateX(-${index * 33.333}%)`;
+    
+    dots.querySelectorAll('.carousel-dot').forEach(d => d.classList.remove('active'));
+    const activeDot = dots.querySelector(`.carousel-dot[data-slide="${index}"]`);
+    if (activeDot) activeDot.classList.add('active');
+  };
+  
+  // Setup swipe functionality
+  const setupSwipe = (carousel, slides, dots, imageCount, updateCallback) => {
+    let startX = 0;
+    let currentSlide = 0;
+    
+    carousel.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    });
+    
+    carousel.addEventListener('touchend', (e) => {
+      const endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      const threshold = 50;
+      
+      if (Math.abs(diff) > threshold) {
+        if (diff > 0 && currentSlide < imageCount - 1) {
+          currentSlide++;
+        } else if (diff < 0 && currentSlide > 0) {
+          currentSlide--;
         }
+        
+        updateCarousel(slides, dots, currentSlide, imageCount);
+        updateCallback(currentSlide);
+      }
+    });
+  };
+  
+  // Handle window resize
+  const handleResize = () => {
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      setupMobileCarousels();
+    }
+  };
+  
+  return { init };
+})();
+
+/* ============================================================================
+   ANIMATIONS MODULE
+   Handles scroll animations and element transitions
+   ============================================================================ */
+const Animations = (() => {
+  const init = () => {
+    setupScrollAnimations();
+    setupHeroAnimations();
+  };
+  
+  // Initial hero animations
+  const setupHeroAnimations = () => {
+    const heroElements = [
+      { el: document.querySelector('.hero-title'), delay: 500 },
+      { el: document.querySelector('.hero-subtitle'), delay: 700 },
+      { el: document.querySelector('.profile-image-container'), delay: 300 },
+      { el: document.querySelector('.absolute.bottom-4.right-20'), delay: 900 }
     ];
     
-    // Filter out any undefined sections
-    const validSections = sections.filter(section => section.element !== null);
-    
-    // Prepare each section for animations
-    validSections.forEach(section => {
-        const el = section.element;
-        el.classList.add('animated-section');
-        el.dataset.sectionId = section.id;
-        el.style.opacity = (section.id === 'hero') ? '1' : '0';
-        el.style.transform = (section.id === 'hero') ? section.enterAnimation : 'translateY(30px)';
-        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    heroElements.forEach(({ el, delay }) => {
+      if (el) {
+        el.style.opacity = '0';
+        el.style.animation = `fadeIn 0.8s ease forwards ${delay}ms`;
+      }
     });
+  };
+  
+  // Scroll-based animations
+  const setupScrollAnimations = () => {
+    const sections = document.querySelectorAll('section');
     
-    // Set up inner element animations for each section
-    setupInnerAnimations();
-    
-    // Create intersection observer for section visibility
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            const section = entry.target;
-            const sectionId = section.dataset.sectionId;
-            const sectionConfig = validSections.find(s => s.id === sectionId);
-            
-            if (!sectionConfig) return;
-            
-            // When section enters viewport
-            if (entry.isIntersecting) {
-                section.style.opacity = '1';
-                section.style.transform = sectionConfig.enterAnimation;
-                
-                // Animate inner elements if this is the first time seeing this section
-                if (section.dataset.animated !== 'true') {
-                    animateInnerElements(sectionId);
-                    section.dataset.animated = 'true';
-                }
-            } 
-            // When section exits viewport
-            else {
-                if (entry.boundingClientRect.top < 0) {
-                    // Scrolled past - exit upward
-                    section.style.opacity = '0';
-                    section.style.transform = sectionConfig.exitAnimation;
-                } else {
-                    // Not yet scrolled to - prepare for entrance
-                    section.style.opacity = '0';
-                    section.style.transform = 'translateY(30px)';
-                }
-            }
-        });
-    }, {
-        rootMargin: '-10% 0px',
-        threshold: [0.3, 0.7] 
-    });
-    
-    // Start observing all sections
-    validSections.forEach(section => {
-        if (section.element) {
-            observer.observe(section.element);
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
         }
-    });
+      });
+    }, { threshold: 0.1 });
     
-    // Add special navigation effect on scroll
-    window.addEventListener('scroll', function() {
-        const nav = document.querySelector('nav');
-        if (nav) {
-            if (window.scrollY > 50) {
-                nav.style.backgroundColor = 'rgba(18, 18, 24, 0.8)';
-                nav.style.backdropFilter = 'blur(5px)';
-            } else {
-                nav.style.backgroundColor = 'transparent';
-                nav.style.backdropFilter = 'none';
-            }
-        }
+    sections.forEach(section => {
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(20px)';
+      section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(section);
     });
-}
+  };
+  
+  return { init };
+})();
 
-// Set up animations for inner elements of each section
-function setupInnerAnimations() {
-    // Define inner elements to animate for each section
-    const sectionInnerElements = {
-        'hero': {
-            title: {
-                selector: '.hero-title',
-                fromTransform: 'translateX(-30px)'
-            },
-            subtitle: {
-                selector: '.hero-subtitle',
-                fromTransform: 'translateX(-30px)'
-            },
-            profileImage: {
-                selector: '.profile-image-container',
-                fromTransform: 'translateY(30px)'
-            },
-            socialIcons: {
-                selector: '.absolute.bottom-4.right-20',
-                fromTransform: 'translateY(20px)'
-            }
-        },
-        'about': {
-            title: {
-                selector: '#about h2',
-                fromTransform: 'translateY(30px)'
-            },
-            content: {
-                selector: '#about .md\\:w-2\\/3',
-                fromTransform: 'translateX(-30px)'
-            },
-            image: {
-                selector: '#about .md\\:w-1\\/3',
-                fromTransform: 'translateX(30px)'
-            }
-        },
-        'projects': {
-            title: {
-                selector: '#projects h2',
-                fromTransform: 'translateY(30px)'
-            },
-            cards: {
-                selector: '#projects .project-card',
-                fromTransform: 'translateY(30px)',
-                staggered: true
-            }
-        },
-        'contacts': {
-            title: {
-                selector: '#contacts h2',
-                fromTransform: 'translateY(30px)'
-            },
-            cards: {
-                selector: '#contacts .bg-gray-800',
-                fromTransform: 'translateY(30px)',
-                staggered: true
-            },
-            footer: {
-                selector: '#contacts .text-center.mt-16',
-                fromTransform: 'translateY(20px)'
-            }
-        }
-    };
-    
-    // Prepare all inner elements
-    Object.keys(sectionInnerElements).forEach(sectionId => {
-        const elementsConfig = sectionInnerElements[sectionId];
-        
-        Object.keys(elementsConfig).forEach(key => {
-            const config = elementsConfig[key];
-            const elements = document.querySelectorAll(config.selector);
-            
-            elements.forEach((el, index) => {
-                el.classList.add('inner-animated');
-                el.dataset.sectionId = sectionId;
-                el.dataset.animationGroup = key;
-                el.dataset.fromTransform = config.fromTransform;
-                el.dataset.initialState = 'hidden';
-                
-                // Add index for staggered animations
-                if (config.staggered) {
-                    el.dataset.staggerIndex = index;
-                }
-                
-                // Set initial state if not hero section
-                if (sectionId !== 'hero') {
-                    el.style.opacity = '0';
-                    el.style.transform = config.fromTransform;
-                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                }
-            });
-        });
-    });
-}
-
-// Function to animate inner elements of a section
-function animateInnerElements(sectionId) {
-    const innerElements = document.querySelectorAll(`.inner-animated[data-section-id="${sectionId}"]`);
-    
-    innerElements.forEach(el => {
-        // Skip if already animated
-        if (el.dataset.initialState === 'visible') return;
-        
-        const baseDelay = 200; // Base delay in ms
-        const staggerDelay = el.dataset.staggerIndex ? parseInt(el.dataset.staggerIndex) * 100 : 0;
-        
-        // Group-specific delays
-        let groupDelay = 0;
-        if (el.dataset.animationGroup === 'title') {
-            groupDelay = 0;
-        } else if (el.dataset.animationGroup === 'content' || el.dataset.animationGroup === 'cards') {
-            groupDelay = 200;
-        } else if (el.dataset.animationGroup === 'image') {
-            groupDelay = 300;
-        } else if (el.dataset.animationGroup === 'footer' || el.dataset.animationGroup === 'socialIcons') {
-            groupDelay = 400;
-        }
-        
-        // Calculate total delay
-        const totalDelay = baseDelay + groupDelay + staggerDelay;
-        
-        // Animate after delay
-        setTimeout(() => {
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-            el.dataset.initialState = 'visible';
-        }, totalDelay);
-    });
-}
+/* ============================================================================
+   APPLICATION INITIALIZATION
+   Initialize all modules when DOM is ready
+   ============================================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('🚀 Portfolio initialized');
+  
+  // Initialize theme first (before other modules)
+  ThemeManager.init();
+  
+  // Initialize other modules
+  Navigation.init();
+  Tabs.init();
+  Projects.init();
+  Animations.init();
+});

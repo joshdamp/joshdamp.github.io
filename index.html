@@ -8,16 +8,21 @@
     <!-- Production CSS file -->
     <link href="css/styles.css" rel="stylesheet">
 </head>
-<body class="bg-dark text-white font-poppins">
+<body class="bg-dark text-white font-poppins" style="background-color: var(--color-bg-primary); color: var(--color-text-primary);" id="mainBody">
     <!-- Navigation - Present on all pages with transparent background -->
     <nav class="container mx-auto px-6 md:px-16 py-6 flex justify-between items-center sticky top-0 z-50">
-        <div class="text-2xl font-bold text-primary">JDAMPS</div>
-        <button class="mobile-menu-btn md:hidden">☰</button>
-        <div class="nav-links hidden md:flex space-x-4 md:space-x-10">
+        <div class="text-2xl font-bold title-brand">JDAMPS</div>
+        <div class="flex items-center gap-4 md:gap-6">
+            <button class="mobile-menu-btn md:hidden" style="color: var(--color-accent);">☰</button>
+        </div>
+        <div class="nav-links hidden md:flex space-x-4 md:space-x-10 items-center">
             <a href="#hero" class="hover:text-primary">Home</a>
             <a href="#about" class="hover:text-primary">About</a>
             <a href="#projects" class="hover:text-primary">Projects</a>
             <a href="#contacts" class="hover:text-primary">Contacts</a>
+            <button class="theme-toggle-btn" id="themeToggle" title="Toggle dark/light mode" aria-label="Toggle theme">
+                <span>🌙</span>
+            </button>
         </div>
     </nav>
 
@@ -36,14 +41,14 @@
 
             <!-- Hero Text -->
             <div class="md:w-1/2 md:pl-12">
-                <h2 class="hero-title mb-2">Hi I'm <span class="text-primary">Joshua Dampil</span></h2>
-                <p class="hero-subtitle mb-8">Freelance Full-Stack Developer.</p>
+                <h2 class="hero-title mb-2">Hi I'm <span class="title-hero">Joshua Dampil</span></h2>
+                <p class="hero-subtitle mb-8">Full-Stack Developer & AI Engineer</p>
             </div>
         </div>
 
         <!-- Social Icons (Bottom Left of Hero Section) -->
         <div class="absolute bottom-4 right-20 flex space-x-6">
-            <a href="mailto:joshuagdampil@gmail.com" class="text-white hover:text-primary">
+            <a href="mailto:joshuadamps.com" class="text-white hover:text-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20,4H4C2.9,4,2,4.9,2,6v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V6C22,4.9,21.1,4,20,4z M20,8l-8,5L4,8V6l8,5l8-5V8z"/>
                 </svg>
@@ -63,7 +68,7 @@
 
     <!-- About Section with Tabs -->
     <section id="about" class="container mx-auto px-6 py-16 mt-12">
-        <h2 class="text-3xl font-semibold text-primary mb-12 text-center">Get To Know Me</h2>
+        <h2 class="text-3xl font-semibold mb-12 text-center title-about">Get To Know Me</h2>
 
         <div class="flex flex-col md:flex-row items-start justify-between max-w-6xl mx-auto">
             <!-- About text (before tabs) -->
@@ -71,7 +76,7 @@
                 <!-- About text without container -->
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold text-secondary mb-3">Hi I'm <span class="text-primary">Josh</span></h3>
-                    <p class="text-sm text-secondary opacity-80">A 3rd-year Computer Science student from Mapua Malayan Colleges Laguna. I specialize in full-stack development for web and mobile, crafting innovative and functional digital solutions.</p>
+                    <p class="text-sm text-secondary opacity-80">A 4th-year Computer Science student from Mapua Malayan Colleges Laguna. I specialize in web development, mobile development, and AI engineering, crafting innovative and functional digital solutions.</p>
                 </div>
 
                 <!-- Tabs Navigation -->
@@ -286,7 +291,7 @@
     </section>
     <!-- Projects Section -->
     <section id="projects" class="container mx-auto px-6 py-16 mt-12">
-        <h2 class="text-3xl font-semibold text-primary mb-12 text-center">Featured Works</h2>
+        <h2 class="text-3xl font-semibold mb-12 text-center title-projects">Featured Works</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Project Card 1 -->
@@ -438,7 +443,7 @@
 <!-- Contact Section - Mobile Optimized -->
 <section id="contacts" class="container mx-auto px-4 md:px-6 py-12 md:py-20">
     <div class="pt-8 md:pt-16">
-        <h2 class="text-2xl md:text-3xl font-semibold text-primary text-center mb-8 md:mb-16">Connect With Me</h2>
+        <h2 class="text-2xl md:text-3xl font-semibold text-primary text-center mb-8 md:mb-16 title-contacts">Connect With Me</h2>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
