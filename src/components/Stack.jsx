@@ -38,7 +38,8 @@ export default function Stack({
   cardDimensions = { width: 280, height: 280 },
   cardsData = [],
   animationConfig = { stiffness: 260, damping: 20 },
-  sendToBackOnClick = true
+  sendToBackOnClick = true,
+  onCardClick = null
 }) {
   const [cards, setCards] = useState(cardsData.length ? cardsData : [])
 
@@ -72,7 +73,9 @@ export default function Stack({
           >
             <motion.div
               className="card"
-              onClick={() => sendToBackOnClick && sendToBack(card.id)}
+              onClick={() => {
+                sendToBackOnClick && sendToBack(card.id);
+              }}
               animate={{
                 rotateZ: (cards.length - index - 1) * 4 + randomRotate,
                 scale: 1 + index * 0.06 - cards.length * 0.06,
@@ -102,6 +105,17 @@ export default function Stack({
                         <span key={tagIdx} className="tag">{tag}</span>
                       ))}
                     </div>
+                  )}
+                  {onCardClick && (
+                    <button
+                      className="card-view-details-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onCardClick(card.id);
+                      }}
+                    >
+                      View Details
+                    </button>
                   )}
                 </div>
               )}

@@ -41,7 +41,7 @@ export default function Contact() {
           </div>
           <div>
             <p className="text-sm md:text-base text-white">Facebook: Joshua Dampil</p>
-            <p className="text-sm md:text-base text-white">Instagram: jshdamps</p>
+            <p className="text-sm md:text-base text-white">LinkedIn: Joshua Dampil</p>
           </div>
         </div>
 

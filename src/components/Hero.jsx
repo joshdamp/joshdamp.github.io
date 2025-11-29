@@ -1,3 +1,5 @@
+import SplitText from './SplitText';
+
 export default function Hero() {
   return (
     <section id="hero" className="container mx-auto px-6 py-16 flex items-center justify-center relative">
@@ -10,7 +12,20 @@ export default function Hero() {
         </div>
 
         <div className="md:w-1/2 md:pl-12">
-          <h2 className="hero-title mb-2">Hi I'm <span className="title-hero">Joshua Dampil</span></h2>
+          <SplitText
+            text="Joshua Dampil"
+            tag="h2"
+            className="hero-title mb-2"
+            delay={50}
+            duration={0.5}
+            ease="power3.out"
+            splitType="chars"
+            from={{ opacity: 0, y: 40 }}
+            to={{ opacity: 1, y: 0 }}
+            threshold={0.1}
+            rootMargin="-100px"
+            textAlign="left"
+          />
           <p className="hero-subtitle mb-8">Full-Stack Developer & AI Engineer</p>
         </div>
       </div>
