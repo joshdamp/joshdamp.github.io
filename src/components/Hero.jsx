@@ -7,7 +7,7 @@ export default function Hero() {
         <p className="hero-subtitle">FullStack Developer</p>
         
         <div className="hero-links">
-          <a href="/cv.pdf" download="Joshua_Dampil_CV.pdf" className="hero-cv-link">
+          <a href="/Joshua_Dampil_CV.pdf" download="Joshua_Dampil_CV.pdf" className="hero-cv-link">
             Download CV
           </a>
           
