@@ -3,6 +3,13 @@ import { useState, useEffect } from 'react'
 export default function Chatbot() {
   const [isMinimized, setIsMinimized] = useState(true)
 
+  // Listen for custom event from Hero chatbot button
+  useEffect(() => {
+    const handleOpenChatbot = () => setIsMinimized(false)
+    window.addEventListener('openChatbot', handleOpenChatbot)
+    return () => window.removeEventListener('openChatbot', handleOpenChatbot)
+  }, [])
+
   return (
     <div>
       <div id="chatbot-widget" className="chatbot-widget" style={{ display: isMinimized ? 'none' : 'flex' }}>
@@ -26,16 +33,6 @@ export default function Chatbot() {
           <button id="send-btn" className="chatbot-send-btn">Send</button>
         </div>
       </div>
-
-      <button 
-        id="chatbot-toggle" 
-        className="chatbot-toggle-btn" 
-        onClick={() => setIsMinimized(false)}
-        title="Open chatbot"
-        style={{ display: isMinimized ? 'block' : 'none' }}
-      >
-        💬
-      </button>
     </div>
   )
 }

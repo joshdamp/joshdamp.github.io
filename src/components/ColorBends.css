@@ -1,0 +1,34 @@
+.color-bends-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.color-bends-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  transition: background-color 0.3s ease;
+}
+
+.color-bends-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.App {
+  position: relative;
+}
+
+.App > *:not(.color-bends-wrapper) {
+  position: relative;
+  z-index: 1;
+}

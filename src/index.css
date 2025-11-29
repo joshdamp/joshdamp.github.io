@@ -53,9 +53,13 @@ body.light-mode {
    ============================================================================ */
 body {
   font-family: Poppins, sans-serif;
-  background-color: var(--color-bg-primary);
+  background-color: transparent;
   color: var(--color-text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+body.light-mode {
+  background-color: var(--color-bg-primary);
 }
 
 /* ============================================================================
@@ -125,6 +129,140 @@ nav:hover {
 /* ============================================================================
    HERO SECTION
    ============================================================================ */
+#hero {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.hero-content {
+  position: absolute;
+  left: 12%;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 20;
+}
+
+.hero-name {
+  font-size: clamp(2.25rem, 4.5vw, 4.05rem);
+  font-weight: bold;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+body.light-mode .hero-name {
+  color: #111827;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  color: #9ca3af;
+  margin-bottom: 3rem;
+}
+
+body.light-mode .hero-subtitle {
+  color: #4b5563;
+}
+
+.hero-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hero-cv-link {
+  font-size: clamp(0.9rem, 1.5vw, 1.25rem);
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.hero-cv-link:hover {
+  color: var(--color-accent);
+}
+
+body.light-mode .hero-cv-link {
+  color: #111827;
+}
+
+.hero-social-icons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.hero-social-link {
+  color: white;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.hero-social-link:hover {
+  color: var(--color-accent);
+  transform: scale(1.15);
+}
+
+.hero-social-link svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+body.light-mode .hero-social-link {
+  color: #111827;
+}
+
+body.light-mode .hero-social-link:hover {
+  color: var(--color-accent);
+}
+
+.hero-profile-image {
+  position: absolute;
+  bottom: 10%;
+  left: 65%;
+  transform: translateX(-50%);
+  height: 105vh;
+  width: auto;
+  object-fit: contain;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hero-chatbot-btn {
+  position: absolute;
+  bottom: 25%;
+  right: 11rem;
+  z-index: 50;
+  padding: 0.75rem;
+  background-color: transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.hero-chatbot-btn:hover {
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.hero-chatbot-btn svg {
+  width: 2rem;
+  height: 2rem;
+  color: white;
+}
+
+body.light-mode .hero-chatbot-btn {
+  border-color: #111827;
+}
+
+body.light-mode .hero-chatbot-btn svg {
+  color: #111827;
+}
+
+body.light-mode .hero-chatbot-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 .hero-title {
   font-size: 36px;
   font-weight: 600;
@@ -132,42 +270,7 @@ nav:hover {
   transition: color 0.3s ease;
 }
 
-.hero-name {
-  color: var(--color-title-hero);
-}
-
-.hero-subtitle {
-  font-size: 22px;
-  font-weight: 400;
-  color: var(--color-text-secondary);
-  transition: color 0.3s ease;
-}
-
-.profile-image-container {
-  position: relative;
-  width: 450px;
-  height: 500px;
-}
-
-.profile-image {
-  top: 0;
-  z-index: 2;
-  width: 70%;
-}
-
-.hexagon-image,
-.profile-image {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  height: auto;
-}
-
-.hexagon-image {
-  top: 50px;
-  z-index: 1;
-  width: 130%;
-}
+/* Profile image styles removed - now handled inline in Hero.jsx */
 
 /* ============================================================================
    SECTION TITLES
@@ -653,8 +756,9 @@ body.light-mode #projects .text-sm {
   color: var(--color-text-secondary) !important;
 }
 
-body.light-mode #contacts .bg-gray-800 {
-  background-color: var(--color-bg-secondary) !important;
+body.light-mode #contacts .bg-gray-800,
+body.light-mode .contact-card {
+  background-color: transparent !important;
   border: 1px solid var(--color-border) !important;
   color: var(--color-text-secondary) !important;
 }
@@ -850,7 +954,7 @@ h2.text-3xl {
    CONTACTS SECTION
    ============================================================================ */
 #contacts {
-  background-color: var(--color-bg-primary);
+  background-color: transparent;
   min-height: calc(100vh - 85px);
   padding-bottom: 0;
 }
@@ -859,15 +963,25 @@ h2.text-3xl {
   color: var(--color-accent);
 }
 
+.contact-card {
+  background-color: transparent !important;
+  transition: transform 0.3s ease;
+  border: 1px solid var(--color-border);
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+}
+
 #contacts .bg-gray-800 {
-  background-color: var(--color-bg-secondary);
+  background-color: transparent;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid var(--color-border);
 }
 
 #contacts .bg-gray-800:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px var(--color-card-hover);
+  box-shadow: none;
 }
 
 #contacts svg {
@@ -878,8 +992,8 @@ h2.text-3xl {
    FOOTER STYLES
    ============================================================================ */
 .footer-custom {
-  background-color: var(--color-bg-secondary);
-  border-top: 1px solid var(--color-border);
+  background-color: transparent;
+  border-top: none;
 }
 
 .footer-text {
@@ -893,61 +1007,7 @@ h2.text-3xl {
    RESPONSIVE STYLES
    ============================================================================ */
 @media screen and (max-width: 768px) {
-  #hero {
-    flex-direction: column;
-    text-align: center;
-    position: relative;
-    min-height: calc(100vh - 85px);
-    justify-content: center;
-    padding-bottom: 100px;
-  }
-
-  #hero .flex-col {
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  .profile-image-container {
-    width: 280px;
-    height: 320px;
-    margin: 0 auto 30px;
-    position: relative;
-  }
-
-  .profile-image {
-    width: 80%;
-  }
-
-  .hexagon-image,
-  .profile-image {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .hexagon-image {
-    width: 120%;
-    z-index: -1;
-  }
-
-  .hero-title {
-    font-size: 28px;
-    margin-bottom: 5px;
-  }
-
-  .hero-subtitle {
-    font-size: 20px;
-    margin-bottom: 30px;
-  }
-
-  #hero .absolute {
-    position: absolute;
-    bottom: 40px;
-    right: auto;
-    left: 50%;
-    transform: translateX(-50%);
-    width: auto;
-  }
+  /* Hero section mobile styles removed - now handled inline in Hero.jsx */
 
   nav {
     padding: 1rem;
@@ -1185,18 +1245,7 @@ h2.text-3xl {
 }
 
 @media screen and (max-width: 375px) {
-  .profile-image-container {
-    width: 240px;
-    height: 280px;
-  }
-
-  .hero-title {
-    font-size: 24px;
-  }
-
-  .hero-subtitle {
-    font-size: 18px;
-  }
+  /* Hero mobile styles removed - now handled inline in Hero.jsx */
 
   #about {
     padding-top: 2rem;
