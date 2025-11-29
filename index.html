@@ -45,23 +45,32 @@
             </div>
         </div>
 
-        <!-- Social Icons (Bottom Left of Hero Section) -->
-        <div class="absolute bottom-4 right-20 flex space-x-6">
-            <a href="mailto:joshuadamps.com" class="social-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20,4H4C2.9,4,2,4.9,2,6v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V6C22,4.9,21.1,4,20,4z M20,8l-8,5L4,8V6l8,5l8-5V8z"/>
-                </svg>
-            </a>
-            <a href="https://github.com/joshdamp" target="_blank" rel="noopener noreferrer" class="social-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12,2C6.5,2,2,6.5,2,12c0,4.4,2.9,8.2,7,9.5c0.5,0.1,0.7-0.2,0.7-0.5c0-0.2,0-0.9,0-1.7c-2.9,0.6-3.5-1.4-3.5-1.4c-0.5-1.2-1.1-1.5-1.1-1.5c-0.9-0.6,0.1-0.6,0.1-0.6c1,0.1,1.5,1,1.5,1c0.9,1.5,2.3,1.1,2.9,0.8c0.1-0.6,0.3-1.1,0.6-1.3c-2.2-0.3-4.6-1.1-4.6-5c0-1.1,0.4-2,1-2.7c-0.1-0.3-0.4-1.3,0.1-2.7c0,0,0.8-0.3,2.7,1c0.8-0.2,1.6-0.3,2.5-0.3c0.8,0,1.7,0.1,2.5,0.3c1.9-1.3,2.7-1,2.7-1c0.5,1.4,0.2,2.4,0.1,2.7c0.6,0.7,1,1.6,1,2.7c0,3.9-2.4,4.7-4.6,5c0.3,0.3,0.6,0.9,0.6,1.8c0,1.3,0,2.3,0,2.6c0,0.3,0.2,0.6,0.7,0.5c4.1-1.4,7-5.1,7-9.5C22,6.5,17.5,2,12,2z"/>
-                </svg>
-            </a>
-            <a href="https://www.linkedin.com/in/joshua-dampil123/" target="_blank" rel="noopener noreferrer" class="social-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M9,17H6.5v-7H9V17z M7.7,8.7c-0.8,0-1.4-0.7-1.4-1.4c0-0.8,0.6-1.4,1.4-1.4c0.8,0,1.4,0.6,1.4,1.4C9.1,8.1,8.5,8.7,7.7,8.7z M18,17h-2.5v-3.9c0-1.1-0.2-2.4-1.7-2.4c-1.7,0-2,1.3-2,2.7V17H9.5v-7h2.4v1.2h0c0.4-0.8,1.5-1.6,3-1.6c3.2,0,3.8,2.1,3.8,4.9V17z"/>
-                </svg>
-            </a>
+        <!-- Hero Bottom Controls: Social Icons (Left) & Chatbot (Right) -->
+        <div class="hero-controls">
+            <!-- Social Icons - Left Side -->
+            <nav class="social-links" aria-label="Social media links">
+                <a href="mailto:joshuadamps@gmail.com" class="social-link" title="Email">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20,4H4C2.9,4,2,4.9,2,6v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V6C22,4.9,21.1,4,20,4z M20,8l-8,5L4,8V6l8,5l8-5V8z"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/joshdamp" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12,2C6.5,2,2,6.5,2,12c0,4.4,2.9,8.2,7,9.5c0.5,0.1,0.7-0.2,0.7-0.5c0-0.2,0-0.9,0-1.7c-2.9,0.6-3.5-1.4-3.5-1.4c-0.5-1.2-1.1-1.5-1.1-1.5c-0.9-0.6,0.1-0.6,0.1-0.6c1,0.1,1.5,1,1.5,1c0.9,1.5,2.3,1.1,2.9,0.8c0.1-0.6,0.3-1.1,0.6-1.3c-2.2-0.3-4.6-1.1-4.6-5c0-1.1,0.4-2,1-2.7c-0.1-0.3-0.4-1.3,0.1-2.7c0,0,0.8-0.3,2.7,1c0.8-0.2,1.6-0.3,2.5-0.3c0.8,0,1.7,0.1,2.5,0.3c1.9-1.3,2.7-1,2.7-1c0.5,1.4,0.2,2.4,0.1,2.7c0.6,0.7,1,1.6,1,2.7c0,3.9-2.4,4.7-4.6,5c0.3,0.3,0.6,0.9,0.6,1.8c0,1.3,0,2.3,0,2.6c0,0.3,0.2,0.6,0.7,0.5c4.1-1.4,7-5.1,7-9.5C22,6.5,17.5,2,12,2z"/>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/joshua-dampil123/" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M9,17H6.5v-7H9V17z M7.7,8.7c-0.8,0-1.4-0.7-1.4-1.4c0-0.8,0.6-1.4,1.4-1.4c0.8,0,1.4,0.6,1.4,1.4C9.1,8.1,8.5,8.7,7.7,8.7z M18,17h-2.5v-3.9c0-1.1-0.2-2.4-1.7-2.4c-1.7,0-2,1.3-2,2.7V17H9.5v-7h2.4v1.2h0c0.4-0.8,1.5-1.6,3-1.6c3.2,0,3.8,2.1,3.8,4.9V17z"/>
+                    </svg>
+                </a>
+            </nav>
+
+            <!-- Chatbot Button - Right Side -->
+            <button id="chatbot-toggle-btn" class="chatbot-toggle-hero" type="button" title="Open chat" aria-label="Open chatbot">
+                <span class="sr-only">Open Chat</span>
+                💬
+            </button>
         </div>
     </section>
 
@@ -337,7 +346,7 @@
                     </div>
                 </div>
                 <div class="p-4">
-                    <h3 class="text-lg font-medium mb-1">ROTC Inventory</h3>
+                    <h3 class="text-lg font-medium mb-1">Clothera</h3>
                     <p class="text-sm text-secondary opacity-80 mb-2">CRUD Inventory & Return and Borrow using QR Code</p>
                     <p class="text-xs text-secondary opacity-60 mb-2">React, Bootstrap, Next.js, NodeJs, MySQL</p>
                     <a href="#" class="github-link text-xs text-secondary hover:text-primary transition-colors duration-200">View on GitHub</a>
@@ -360,7 +369,7 @@
                     </div>
                 </div>
                 <div class="p-4">
-                    <h3 class="text-lg font-medium mb-1">Neon Sprint</h3>
+                    <h3 class="text-lg font-medium mb-1">Hiring System</h3>
                     <p class="text-sm text-secondary opacity-80 mb-2">C# Winforms Game</p>
                     <p class="text-xs text-secondary opacity-60 mb-2">C#</p>
                     <a href="#" class="github-link text-xs text-secondary hover:text-primary transition-colors duration-200">View on GitHub</a>
@@ -383,7 +392,7 @@
                     </div>
                 </div>
                 <div class="p-4">
-                    <h3 class="text-lg font-medium mb-1">IMNOTLAZY Clothing</h3>
+                    <h3 class="text-lg font-medium mb-1">MindMap</h3>
                     <p class="text-sm text-secondary opacity-80 mb-2">E-Commerece Admin Web and Mobile Application</p>
                     <p class="text-xs text-secondary opacity-60 mb-2">React.js, tailwind.css, firebase, netlify.js, javascript</p>
                     <a href="#" class="github-link text-xs text-secondary hover:text-primary transition-colors duration-200">View on GitHub</a>
@@ -406,7 +415,7 @@
                     </div>
                 </div>
                 <div class="p-4">
-                    <h3 class="text-lg font-medium mb-1">SkyTrack</h3>
+                    <h3 class="text-lg font-medium mb-1">SanKa</h3>
                     <p class="text-sm text-secondary opacity-80 mb-2">Weather Application</p>
                     <p class="text-xs text-secondary opacity-60 mb-2">React, Bootstrap javascript</p>
                     <a href="#" class="github-link text-xs text-secondary hover:text-primary transition-colors duration-200">View on GitHub</a>
@@ -429,7 +438,7 @@
                     </div>
                 </div>
                 <div class="p-4">
-                    <h3 class="text-lg font-medium mb-1">ROTC Attendance</h3>
+                    <h3 class="text-lg font-medium mb-1">NeuroView</h3>
                     <p class="text-sm text-secondary opacity-80 mb-2">Attendance Tracking using QR Code</p>
                     <p class="text-xs text-secondary opacity-60 mb-2">React, Bootstrap, MySQL, Next.js, NodeJs</p>
                     <a href="#" class="github-link text-xs text-secondary hover:text-primary transition-colors duration-200">View on GitHub</a>
@@ -509,6 +518,26 @@
         </div>
     </footer>
 
+    <!-- Chatbot Widget -->
+    <div id="chatbot-widget" class="chatbot-widget">
+        <div class="chatbot-header">
+            <button id="minimize-btn" class="chatbot-btn" title="Minimize chatbot">−</button>
+        </div>
+        <div id="chatbot-messages" class="chatbot-messages">
+            <div class="chatbot-message bot-message">
+                <p>Hi! 👋 I'm Joshua's chatbot. Feel free to ask me anything about Joshua, his skills, projects, or background!</p>
+            </div>
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask me something...">
+            <button id="send-btn" class="chatbot-send-btn">Send</button>
+        </div>
+    </div>
+
+    <!-- Chatbot Toggle Button (when minimized) -->
+    <button id="chatbot-toggle" class="chatbot-toggle-btn" title="Open chatbot">💬</button>
+
     <!-- JavaScript for tab switching -->
     <script src="js/main.js"></script>
+    <script src="js/chatbot.js"></script>
 </body>
