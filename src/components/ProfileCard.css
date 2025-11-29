@@ -1,0 +1,136 @@
+:root {
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --pointer-from-center: 0;
+  --pointer-from-top: 0.5;
+  --pointer-from-left: 0.5;
+  --card-opacity: 0;
+  --rotate-x: 0deg;
+  --rotate-y: 0deg;
+  --behind-glow-color: rgba(125, 190, 255, 0.67);
+  --behind-glow-size: 50%;
+  --card-radius: 30px;
+}
+
+.pc-card-wrapper {
+  perspective: 500px;
+  transform: translate3d(0, 0, 0.1px);
+  position: relative;
+  touch-action: none;
+  width: 100%;
+  height: auto;
+}
+
+.pc-behind {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--pointer-x) var(--pointer-y),
+    var(--behind-glow-color) 0%,
+    transparent var(--behind-glow-size)
+  );
+  filter: blur(50px) saturate(1.1);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.pc-card {
+  height: auto;
+  max-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 0.718;
+  border-radius: var(--card-radius);
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.8) calc((var(--pointer-from-left) * 10px) - 3px)
+    calc((var(--pointer-from-top) * 20px) - 6px) 20px -5px;
+  transition: transform 1s ease;
+  transform: translateZ(0) rotateX(0deg) rotateY(0deg);
+  background: transparent;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.pc-card:hover,
+.pc-card.active {
+  transition: none;
+  transform: translateZ(0) rotateX(var(--rotate-y)) rotateY(var(--rotate-x));
+}
+
+.pc-card-shell.entering .pc-card {
+  transition: transform 180ms ease-out;
+}
+
+.pc-card-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+}
+
+.pc-inside {
+  inset: 0;
+  position: absolute;
+  background-color: transparent;
+  transform: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pc-shine,
+.pc-glare {
+  display: none;
+}
+
+.pc-avatar-content {
+  mix-blend-mode: normal;
+  overflow: hidden;
+  transform: translateZ(2);
+  backface-visibility: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.pc-avatar-content .avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 120ms ease-out;
+  transform: translateX(calc((var(--pointer-from-left) - 0.5) * 3px)) translateY(calc((var(--pointer-from-top) - 0.5) * 3px)) translateZ(0) scale(1.01);
+}
+
+.pc-avatar-content::before {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .pc-card {
+    height: auto;
+    max-height: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pc-card {
+    height: auto;
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 320px) {
+  .pc-card {
+    height: auto;
+    max-height: 250px;
+  }
+}
