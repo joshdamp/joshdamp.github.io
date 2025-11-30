@@ -89,12 +89,6 @@ body.light-mode .navbar-brand {
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
 
-nav:hover {
-  background-color: var(--color-nav-bg) !important;
-  -webkit-backdrop-filter: blur(5px) !important;
-  backdrop-filter: blur(5px) !important;
-}
-
 .nav-links a {
   font-size: 16px;
   font-weight: 500;
@@ -227,6 +221,23 @@ body.light-mode .hero-social-link:hover {
   object-fit: contain;
   z-index: 10;
   pointer-events: none;
+}
+
+.hero-profile-animate {
+  animation: profileSlideUp 0.7s ease-out 0.3s both;
+}
+
+@keyframes profileSlideUp {
+  from {
+    filter: blur(10px);
+    opacity: 0;
+    transform: translateX(-50%) translateY(50px);
+  }
+  to {
+    filter: blur(0px);
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 .hero-chatbot-btn {
@@ -485,10 +496,11 @@ body.light-mode .chatbot-toggle-hero:hover {
    ============================================================================ */
 .chatbot-widget {
   position: fixed;
-  bottom: 100px;
-  right: 1.5rem;
+  top: 50%;
+  right: 5rem;
+  transform: translateY(-70%);
   width: 350px;
-  height: 500px;
+  height: 450px;
   background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: 12px;
@@ -502,7 +514,18 @@ body.light-mode .chatbot-toggle-hero:hover {
 @media screen and (min-width: 768px) {
   .chatbot-widget {
     width: 380px;
-    right: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .chatbot-widget {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    max-width: 350px;
+    height: 400px;
   }
 }
 
@@ -665,9 +688,9 @@ body.light-mode .chatbot-toggle-hero:hover {
   .chatbot-widget {
     width: 90vw;
     max-width: 350px;
-    height: 450px;
-    bottom: 10px;
-    right: 10px;
+    height: 400px;
+    bottom: 15%;
+    right: 5%;
   }
 
   .chatbot-message {

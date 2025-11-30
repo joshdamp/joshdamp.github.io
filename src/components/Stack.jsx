@@ -1,21 +1,21 @@
 import { motion, useMotionValue, useTransform } from 'motion/react'
-import { useState } from 'react'
+import { useState, memo, useCallback, useMemo } from 'react'
 import './Stack.css'
 
-function CardRotate({ children, onSendToBack, sensitivity }) {
+const CardRotate = memo(({ children, onSendToBack, sensitivity }) => {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const rotateX = useTransform(y, [-100, 100], [60, -60])
   const rotateY = useTransform(x, [-100, 100], [-60, 60])
 
-  function handleDragEnd(_, info) {
+  const handleDragEnd = useCallback((_, info) => {
     if (Math.abs(info.offset.x) > sensitivity || Math.abs(info.offset.y) > sensitivity) {
       onSendToBack()
     } else {
       x.set(0)
       y.set(0)
     }
-  }
+  }, [onSendToBack, sensitivity, x, y])
 
   return (
     <motion.div
@@ -30,9 +30,10 @@ function CardRotate({ children, onSendToBack, sensitivity }) {
       {children}
     </motion.div>
   )
-}
+})
+CardRotate.displayName = 'CardRotate'
 
-export default function Stack({
+function Stack({
   randomRotation = true,
   sensitivity = 180,
   cardDimensions = { width: 280, height: 280 },
@@ -41,27 +42,33 @@ export default function Stack({
   sendToBackOnClick = true,
   onCardClick = null
 }) {
-  const [cards, setCards] = useState(cardsData.length ? cardsData : [])
+  const [cards, setCards] = useState(() => cardsData.length ? cardsData : [])
 
-  const sendToBack = id => {
+  const sendToBack = useCallback((id) => {
     setCards(prev => {
+      const index = prev.findIndex(card => card.id === id)
+      if (index === -1) return prev
       const newCards = [...prev]
-      const index = newCards.findIndex(card => card.id === id)
       const [card] = newCards.splice(index, 1)
       newCards.unshift(card)
       return newCards
     })
-  }
+  }, [])
+
+  const containerStyle = useMemo(() => ({
+    width: cardDimensions.width,
+    height: cardDimensions.height,
+    perspective: 600
+  }), [cardDimensions.width, cardDimensions.height])
+
+  const transition = useMemo(() => ({
+    type: 'spring',
+    stiffness: animationConfig.stiffness,
+    damping: animationConfig.damping
+  }), [animationConfig.stiffness, animationConfig.damping])
 
   return (
-    <div
-      className="stack-container"
-      style={{
-        width: cardDimensions.width,
-        height: cardDimensions.height,
-        perspective: 600
-      }}
-    >
+    <div className="stack-container" style={containerStyle}>
       {cards.map((card, index) => {
         const randomRotate = randomRotation ? Math.random() * 10 - 5 : 0
 
@@ -73,26 +80,25 @@ export default function Stack({
           >
             <motion.div
               className="card"
-              onClick={() => {
-                sendToBackOnClick && sendToBack(card.id);
-              }}
+              onClick={() => sendToBackOnClick && sendToBack(card.id)}
               animate={{
                 rotateZ: (cards.length - index - 1) * 4 + randomRotate,
                 scale: 1 + index * 0.06 - cards.length * 0.06,
                 transformOrigin: '90% 90%'
               }}
               initial={false}
-              transition={{
-                type: 'spring',
-                stiffness: animationConfig.stiffness,
-                damping: animationConfig.damping
-              }}
+              transition={transition}
               style={{
                 width: cardDimensions.width,
                 height: cardDimensions.height
               }}
             >
-              <img src={card.img} alt={`card-${card.id}`} className="card-image" />
+              <img 
+                src={card.img} 
+                alt={`card-${card.id}`} 
+                className="card-image" 
+                loading="lazy"
+              />
               {card.title && (
                 <div className="card-overlay">
                   <h3 className="card-title">{card.title}</h3>
@@ -126,3 +132,5 @@ export default function Stack({
     </div>
   )
 }
+
+export default memo(Stack)

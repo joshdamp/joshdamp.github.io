@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, memo, useMemo } from 'react'
 import ProfileCard from './ProfileCard'
+import ScrollReveal from './ScrollReveal'
 
-export default function About() {
+function About() {
   const [activeTab, setActiveTab] = useState('skills')
 
-  const skills = [
+  // Memoize static data
+  const skills = useMemo(() => [
     { name: 'HTML', img: '/images/HTML.png' },
     { name: 'CSS', img: '/images/CSS.png' },
     { name: 'JavaScript', img: '/images/JavaScript.png' },
@@ -21,9 +23,9 @@ export default function About() {
     { name: 'MongoDB', img: '/images/MongoDB.png' },
     { name: 'Firebase', img: '/images/Firebase.png' },
     { name: 'Google Cloud', img: '/images/GCP.png' },
-  ]
+  ], [])
 
-  const backgroundItems = [
+  const backgroundItems = useMemo(() => [
     {
       category: 'Experience',
       items: ['Freelance Full-Stack Developer (2024-Present)']
@@ -37,9 +39,9 @@ export default function About() {
         'Muntinlupa National High School, STEM Strand (2020–2022) - Graduated with High Honors'
       ]
     }
-  ]
+  ], [])
 
-  const certificates = [
+  const certificates = useMemo(() => [
     { name: 'Prepare Data for ML APIs on Google Cloud', url: 'https://www.cloudskillsboost.google/public_profiles/6b401eaf-82dc-4438-aa77-6928093e330d/badges/9810831' },
     { name: 'Build a Secure Google Cloud Network', url: 'https://www.cloudskillsboost.google/public_profiles/6b401eaf-82dc-4438-aa77-6928093e330d/badges/9808895' },
     { name: 'Set Up an App Dev Environment on Google Cloud', url: 'https://www.cloudskillsboost.google/public_profiles/6b401eaf-82dc-4438-aa77-6928093e330d/badges/9799451' },
@@ -48,15 +50,17 @@ export default function About() {
     { name: 'Google Cloud Computing Foundations: Networking & Security in Google Cloud', url: 'https://www.cloudskillsboost.google/public_profiles/6b401eaf-82dc-4438-aa77-6928093e330d/badges/9413422' },
     { name: 'Google Cloud Computing Foundations: Infrastructure in Google Cloud', url: 'https://www.cloudskillsboost.google/public_profiles/6b401eaf-82dc-4438-aa77-6928093e330d/badges/9403955' },
     { name: 'Google Cloud Computing Foundations: Cloud Computing Fundamentals', url: 'https://www.cloudskillsboost.google/public_profiles/6b401eaf-82dc-4438-aa77-6928093e330d/badges/9398496' },
-  ]
+  ], [])
 
   return (
     <section id="about" className="container mx-auto px-6 py-16 mt-12">
-      <h2 className="text-3xl font-semibold mb-12 text-center title-about">Get To Know Me</h2>
+      <ScrollReveal enableBlur={true} blurStrength={8} y={30} duration={0.8}>
+        <h2 className="text-3xl font-semibold mb-12 text-center title-about">Get To Know Me</h2>
+      </ScrollReveal>
 
       <div className="flex flex-col md:flex-row items-start justify-between max-w-6xl mx-auto">
         {/* Left side - About text and tabs */}
-        <div className="md:w-2/3 pr-0 md:pr-8 mb-8">
+        <ScrollReveal enableBlur={true} blurStrength={6} y={40} duration={1} delay={0.1} containerClassName="md:w-2/3 pr-0 md:pr-8 mb-8">
           {/* About introduction */}
           <div className="mb-8">
             <h3 className="text-lg font-semibold text-secondary mb-3">
@@ -164,10 +168,10 @@ export default function About() {
               </div>
             )}
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Right side - Profile Card */}
-        <div className="md:w-1/3 mt-12 md:mt-0 flex justify-center">
+        <ScrollReveal enableBlur={true} blurStrength={6} y={40} duration={1} delay={0.2} containerClassName="md:w-1/3 mt-12 md:mt-0 flex justify-center">
           <div className="border-2 border-gray-700 rounded-lg p-4 w-full max-w-sm">
             <ProfileCard
               avatarUrl="/images/secondpic.jpg"
@@ -179,8 +183,10 @@ export default function About() {
               behindGlowEnabled={true}
             />
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   )
 }
+
+export default memo(About)

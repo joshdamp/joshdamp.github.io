@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import { useState, memo, useMemo, useCallback } from 'react';
 import Stack from './Stack';
 import ProjectModal from './ProjectModal';
+import ScrollReveal from './ScrollReveal';
 
-export default function Projects() {
+function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const projects = [
+  // Memoize static project data
+  const projects = useMemo(() => [
     {
       id: 6,
       img: '/images/sanka1.png',
@@ -69,38 +71,49 @@ export default function Projects() {
       github: 'https://github.com/joshdamp/Fashion_MP',
       images: ['/images/clothera1.png', '/images/clothera2.png', '/images/clothera3.png']
     }
-  ];
+  ], []);
 
-  const cardsData = projects.map(p => ({
+  const cardsData = useMemo(() => projects.map(p => ({
     id: p.id,
     img: p.img,
     title: p.title,
     description: p.description,
     tags: p.tags
-  }));
+  })), [projects]);
+
+  const handleCardClick = useCallback((cardId) => {
+    const project = projects.find(p => p.id === cardId);
+    if (project) setSelectedProject(project);
+  }, [projects]);
+
+  const handleCloseModal = useCallback(() => setSelectedProject(null), []);
 
   return (
     <section id="projects" className="container mx-auto px-6 py-16 mt-12">
-      <h2 className="text-3xl font-semibold mb-12 text-center title-projects">Featured Works</h2>
-      <div className="flex justify-center">
-        <Stack 
-          cardsData={cardsData}
-          randomRotation={true}
-          sensitivity={180}
-          sendToBackOnClick={true}
-          cardDimensions={{ width: 650, height: 450 }}
-          onCardClick={(cardId) => {
-            const project = projects.find(p => p.id === cardId);
-            if (project) setSelectedProject(project);
-          }}
-        />
-      </div>
+      <ScrollReveal enableBlur={true} blurStrength={8} y={30} duration={0.8}>
+        <h2 className="text-3xl font-semibold mb-12 text-center title-projects">Featured Works</h2>
+      </ScrollReveal>
+      
+      <ScrollReveal enableBlur={true} blurStrength={6} y={50} duration={1} delay={0.15}>
+        <div className="flex justify-center">
+          <Stack 
+            cardsData={cardsData}
+            randomRotation={true}
+            sensitivity={180}
+            sendToBackOnClick={true}
+            cardDimensions={{ width: 650, height: 450 }}
+            onCardClick={handleCardClick}
+          />
+        </div>
+      </ScrollReveal>
 
       <ProjectModal
         project={selectedProject}
         isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
+        onClose={handleCloseModal}
       />
     </section>
   );
 }
+
+export default memo(Projects);

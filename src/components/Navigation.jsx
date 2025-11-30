@@ -1,4 +1,6 @@
-export default function Navigation({ theme, onThemeToggle }) {
+import { memo } from 'react';
+
+const Navigation = memo(({ theme, onThemeToggle }) => {
   return (
     <nav className="container mx-auto px-6 md:px-16 py-6 flex justify-between items-center sticky top-0 z-50">
       <div className="text-2xl font-bold title-brand">JDAMPS</div>
@@ -24,4 +26,8 @@ export default function Navigation({ theme, onThemeToggle }) {
       </div>
     </nav>
   )
-}
+});
+
+Navigation.displayName = 'Navigation';
+
+export default Navigation;
