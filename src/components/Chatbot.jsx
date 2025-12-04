@@ -1,8 +1,7 @@
-import { memo } from 'react'
+﻿import { memo } from "react";
 
 function Chatbot() {
-  // Chatbot temporarily disabled - will be implemented later
-  return null
+  return null;
 }
 
-export default memo(Chatbot)
+export default memo(Chatbot);
