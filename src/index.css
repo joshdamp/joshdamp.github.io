@@ -636,19 +636,19 @@ body.light-mode .chatbot-toggle-hero:hover {
 .chatbot-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 12px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .chatbot-message {
-  padding: 8px 12px;
+  padding: 10px 14px;
   border-radius: 8px;
   max-width: 85%;
   word-wrap: break-word;
-  font-size: 13px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .bot-message {
@@ -758,6 +758,24 @@ body.light-mode .chatbot-toggle-hero:hover {
 
   .chatbot-message {
     max-width: 90%;
+    padding: 12px 16px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .chatbot-messages {
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .chatbot-input {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  .chatbot-send-btn {
+    font-size: 13px;
+    padding: 10px 16px;
   }
 }
 
@@ -1182,7 +1200,7 @@ h2.text-3xl {
     position: absolute;
     right: 1.5rem;
     top: 1.5rem;
-    z-index: 1000;
+    z-index: 10001;
     font-size: 2rem;
     width: 2.5rem;
     height: 2.5rem;
@@ -1204,7 +1222,7 @@ h2.text-3xl {
     left: 0;
     right: 0;
     padding: 1rem 0;
-    z-index: 999;
+    z-index: 10000;
     flex-direction: column;
     gap: 1rem;
   }
