@@ -1283,12 +1283,13 @@ h2.text-3xl {
     overflow-y: auto;
     overflow-x: visible;
     transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
   }
 
   .nav-links-mobile.mobile-active {
     display: flex;
     flex-direction: column;
-    pointer-events: auto !important;
+    pointer-events: auto;
     right: 0;
   }
 
