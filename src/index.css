@@ -10,14 +10,14 @@
   --color-bg-tertiary: #2D2D2D;
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #F1EAFF;
-  --color-accent: #B3ECFF;
+  --color-accent: #b366ff;
   --color-accent-hover: #A0E0F0;
   --color-border: #4B4B4B;
   --color-nav-bg: rgba(18, 18, 24, 0.2);
   --color-card-hover: rgba(0, 0, 0, 0.5);
   
   /* Title Colors */
-  --color-title-brand: #23d090;
+  --color-title-brand: #a855f7;
   --color-title-hero: #23d090;
   --color-title-about: #A78BFA;
   --color-title-projects: #34D399;
@@ -38,7 +38,7 @@ body.light-mode {
   --color-card-hover: rgba(31, 41, 55, 0.08);
   
   /* Title Colors for Light Mode */
-  --color-title-brand: #0d674b;
+  --color-title-brand: #9333ea;
   --color-title-hero: #059669;
   --color-title-about: #7C3AED;
   --color-title-projects: #059669;
@@ -312,8 +312,8 @@ body.light-mode .hero-chatbot-btn:hover {
     left: auto;
     transform: none;
     width: 90vw;
-    max-width: 350px;
-    height: 400px;
+    max-width: 403px;
+    height: 460px;
     margin-bottom: 10px;
   }
 }
@@ -321,32 +321,32 @@ body.light-mode .hero-chatbot-btn:hover {
 @media screen and (max-width: 600px) {
   .hero-chatbot-popup {
     width: 90vw;
-    max-width: 300px;
-    height: 360px;
+    max-width: 345px;
+    height: 414px;
   }
 }
 
 @media screen and (max-width: 480px) {
   .hero-chatbot-popup {
     width: 90vw;
-    max-width: 280px;
-    height: 340px;
+    max-width: 322px;
+    height: 391px;
   }
 }
 
 @media screen and (max-width: 412px) {
   .hero-chatbot-popup {
     width: 92vw;
-    max-width: 260px;
-    height: 320px;
+    max-width: 299px;
+    height: 368px;
   }
 }
 
 @media screen and (max-width: 360px) {
   .hero-chatbot-popup {
     width: 92vw;
-    max-width: 240px;
-    height: 300px;
+    max-width: 276px;
+    height: 345px;
   }
 }
 
@@ -617,71 +617,76 @@ body.light-mode .chatbot-toggle-hero:hover {
    ============================================================================ */
 /* Chatbot popup styles - used in hero-chatbot-popup */
 .chatbot-header {
-  background-color: var(--color-accent);
-  color: var(--color-bg-primary);
-  padding: 12px 16px;
+  background: rgba(168, 85, 247, 0.15);
+  color: var(--color-text-primary);
+  padding: 14px 16px;
   border-radius: 12px 12px 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-weight: 600;
   font-size: 14px;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
 }
 
 .chatbot-title {
   font-weight: 600;
   font-size: 14px;
+  letter-spacing: 0.3px;
 }
 
 .chatbot-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
+  background: var(--color-bg-primary);
 }
 
 .chatbot-message {
-  padding: 12px 16px;
-  border-radius: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
   max-width: 85%;
   word-wrap: break-word;
-  font-size: 14px;
-  line-height: 1.6;
-  margin: 4px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
 }
 
 .bot-message {
-  background-color: var(--color-bg-tertiary);
+  background-color: rgba(168, 85, 247, 0.12);
   color: var(--color-text-primary);
   align-self: flex-start;
   border-bottom-left-radius: 2px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-left: 2px solid rgba(168, 85, 247, 0.3);
 }
 
 .user-message {
-  background-color: var(--color-accent);
-  color: var(--color-bg-primary);
+  background-color: rgba(168, 85, 247, 0.15);
+  color: var(--color-text-primary);
   align-self: flex-end;
   border-bottom-right-radius: 2px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-right: 2px solid rgba(168, 85, 247, 0.3);
 }
 
 .typing-indicator {
   display: flex;
-  gap: 4px;
-  padding: 8px 12px;
-  background-color: var(--color-bg-tertiary);
-  border-radius: 8px;
+  gap: 6px;
+  padding: 10px 12px;
+  background-color: rgba(179, 102, 255, 0.15);
+  border-radius: 10px;
+  border-left: 3px solid #b366ff;
   width: fit-content;
+  align-self: flex-start;
 }
 
 .typing-indicator span {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background-color: var(--color-accent);
+  background-color: #b366ff;
   animation: typing 1.4s infinite;
 }
 
@@ -706,47 +711,59 @@ body.light-mode .chatbot-toggle-hero:hover {
 
 .chatbot-input-area {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   padding: 12px;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid rgba(168, 85, 247, 0.15);
+  background: var(--color-bg-primary);
 }
 
 .chatbot-input {
   flex: 1;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  padding: 8px 12px;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   font-size: 13px;
   font-family: inherit;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.2s ease;
+}
+
+.chatbot-input::placeholder {
+  color: rgba(168, 85, 247, 0.3);
 }
 
 .chatbot-input:focus {
-  border-color: var(--color-accent);
+  border-color: rgba(168, 85, 247, 0.4);
+  background-color: rgba(168, 85, 247, 0.08);
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.1);
 }
 
 .chatbot-send-btn {
-  background-color: var(--color-accent);
-  color: var(--color-bg-primary);
-  border: none;
-  border-radius: 6px;
-  padding: 8px 14px;
+  background-color: rgba(168, 85, 247, 0.2);
+  color: var(--color-text-primary);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 8px;
+  padding: 10px 16px;
   cursor: pointer;
   font-weight: 600;
   font-size: 12px;
-  transition: background-color 0.2s;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease;
+  min-width: 50px;
 }
 
 .chatbot-send-btn:hover {
-  background-color: var(--color-accent-hover);
+  background: rgba(168, 85, 247, 0.3);
+  border-color: rgba(168, 85, 247, 0.4);
+  transform: translateY(-1px);
 }
 
 .chatbot-send-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
 /* Mobile responsive */
@@ -1204,7 +1221,7 @@ h2.text-3xl {
     position: absolute;
     right: 1.5rem;
     top: 1.5rem;
-    z-index: 10001;
+    z-index: 10003;
     font-size: 2rem;
     width: 2.5rem;
     height: 2.5rem;
@@ -1252,67 +1269,69 @@ h2.text-3xl {
 
   .nav-links-mobile {
     display: none;
-    width: 220px;
-    background-color: rgba(var(--color-nav-bg-rgb), 0.95);
+    width: 200px;
+    background: transparent;
     position: fixed;
     top: 0;
-    left: -220px;
-    height: 100vh;
-    padding: 6rem 1rem 2rem 1rem;
+    right: -200px;
+    height: auto;
+    max-height: fit-content;
+    padding: 5.5rem 0 1.5rem 0;
     z-index: 10002;
     flex-direction: column;
-    gap: 1.5rem;
-    max-height: 100vh;
-    overflow-y: auto;
-    backdrop-filter: blur(10px);
-    border-right: 1px solid var(--color-accent);
-    transition: left 0.3s ease;
+    gap: 0;
+    overflow: visible;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .nav-links-mobile.mobile-active {
     display: flex;
     flex-direction: column;
     pointer-events: auto !important;
-    left: 0;
+    right: 0;
   }
 
   .nav-links-mobile a,
   .nav-links-mobile button {
     display: block;
-    padding: 0.75rem 1rem;
+    padding: 1.1rem 1.5rem;
     text-decoration: none;
     pointer-events: auto !important;
     cursor: pointer !important;
     color: var(--color-text-primary);
-    background: none;
+    background: transparent;
     border: none;
     font-family: inherit;
     font-size: 0.95rem;
-    transition: all 0.3s ease;
-    border-left: 3px solid transparent;
-    padding-left: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    text-align: right;
   }
 
   .nav-links-mobile a:hover,
   .nav-links-mobile button:hover {
     color: var(--color-accent);
-    border-left-color: var(--color-accent);
-    padding-left: 1rem;
+    padding-right: 1.75rem;
   }
 
   .theme-toggle-btn-mobile {
-    margin-top: 1rem;
-    padding: 0.75rem 1rem;
-    background: var(--color-bg-tertiary);
-    border: 1px solid var(--color-accent);
-    border-radius: 6px;
-    color: var(--color-accent);
+    margin-top: 0;
+    padding: 1.1rem 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--color-text-primary);
     transition: all 0.3s ease;
+    text-align: right;
+    font-size: 0.95rem;
+    font-weight: 500;
+    width: 100%;
+    cursor: pointer;
   }
 
   .theme-toggle-btn-mobile:hover {
-    background: var(--color-accent);
-    color: var(--color-bg-primary);
+    color: var(--color-accent);
+    padding-right: 1.75rem;
   }
 
   .theme-toggle-btn {
