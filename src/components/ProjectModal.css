@@ -394,31 +394,265 @@ body.light-mode .project-modal-content::-webkit-scrollbar-thumb:hover {
 }
 
 /* Mobile */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .project-modal-content {
-    width: 95%;
+    width: 90vw;
+    max-width: 600px;
     max-height: 85vh;
+    border-radius: 14px;
   }
 
   .project-modal-body {
-    padding: 24px 16px;
+    padding: 20px;
   }
 
   .project-modal-title {
-    font-size: 22px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-modal-content {
+    width: min(95vw, 300px);
+    max-height: 85vh;
+    border-radius: 12px;
+  }
+
+  .project-modal-close {
+    width: min(36px, 10vw);
+    height: min(36px, 10vw);
+    font-size: min(18px, 5vw);
+    top: min(12px, 2vw);
+    right: min(12px, 2vw);
+  }
+
+  .project-modal-body {
+    padding: min(20px, 4vw);
+  }
+
+  .project-modal-title {
+    font-size: min(22px, 5vw);
+    margin-bottom: min(12px, 2vw);
+  }
+
+  .project-modal-description p {
+    font-size: min(14px, 3vw);
+  }
+
+  .project-modal-section-title {
+    font-size: min(12px, 2.5vw);
+  }
+
+  .project-modal-tag {
+    padding: 4px 10px;
+    font-size: min(11px, 2vw);
+  }
+
+  .project-modal-links {
+    flex-direction: row;
+    gap: min(8px, 2vw);
+  }
+
+  .project-link {
+    font-size: min(13px, 2.5vw);
+    padding: min(10px, 1.5vw) min(14px, 2vw);
+  }
+
+  .carousel-btn {
+    width: min(36px, 10vw);
+    height: min(36px, 10vw);
+    font-size: min(18px, 5vw);
+  }
+}
+
+@media (max-width: 600px) {
+  .project-modal-content {
+    width: 92vw;
+    max-width: 300px;
+    max-height: 80vh;
+    border-radius: 8px;
+  }
+
+  .project-modal-close {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    top: 8px;
+    right: 8px;
+  }
+
+  .project-modal-body {
+    padding: 10px;
+  }
+
+  .project-modal-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .project-modal-description p {
+    font-size: 13px;
+  }
+
+  .project-modal-section-title {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .project-modal-tag {
+    padding: 3px 8px;
+    font-size: 10px;
   }
 
   .project-modal-links {
     flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
   }
 
   .project-link {
-    flex: 1;
+    font-size: 12px;
+    padding: 8px 12px;
   }
 
   .carousel-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+}
+
+/* Galaxy S20 Ultra & large phones (384px-420px) */
+@media (max-width: 412px) {
+  .project-modal-content {
+    width: min(96vw, 300px);
+    max-height: 75vh;
+    border-radius: 6px;
+    max-width: none;
+  }
+
+  .project-modal-close {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    top: 8px;
+    right: 8px;
+  }
+
+  .project-modal-body {
+    padding: 12px;
+  }
+
+  .project-modal-title {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .project-modal-description p {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .project-modal-section-title {
+    font-size: 9px;
+    margin-bottom: 6px;
+  }
+
+  .project-modal-section {
+    margin-bottom: 10px;
+  }
+
+  .project-modal-tag {
+    padding: 2px 6px;
+    font-size: 8px;
+  }
+
+  .project-modal-links {
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+
+  .project-link {
+    font-size: 10px;
+    padding: 6px 10px;
+  }
+
+  .carousel-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+  }
+
+  .carousel-thumbnail {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 360px) {
+  .project-modal-content {
+    width: 94vw;
+    max-width: 280px;
+    max-height: 75vh;
+    border-radius: 6px;
+  }
+
+  .project-modal-close {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  .project-modal-body {
+    padding: 10px;
+  }
+
+  .project-modal-title {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .project-modal-description p {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+
+  .project-modal-section-title {
+    font-size: 8px;
+    margin-bottom: 4px;
+  }
+
+  .project-modal-section {
+    margin-bottom: 8px;
+  }
+
+  .project-modal-tag {
+    padding: 1px 4px;
+    font-size: 7px;
+  }
+
+  .project-modal-links {
+    gap: 4px;
+    margin-top: 8px;
+    padding-top: 8px;
+  }
+
+  .project-link {
+    font-size: 9px;
+    padding: 4px 8px;
+  }
+
+  .carousel-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
+  }
+
+  .carousel-thumbnail {
+    width: 24px;
+    height: 24px;
   }
 }

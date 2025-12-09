@@ -84,7 +84,7 @@ function Stack({
               animate={{
                 rotateZ: (cards.length - index - 1) * 4 + randomRotate,
                 scale: 1 + index * 0.06 - cards.length * 0.06,
-                transformOrigin: '90% 90%'
+                transformOrigin: '80% 80%'
               }}
               initial={false}
               transition={transition}

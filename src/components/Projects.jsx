@@ -1,10 +1,18 @@
-import { useState, memo, useMemo, useCallback } from 'react';
+import { useState, memo, useMemo, useCallback, useEffect } from 'react';
 import Stack from './Stack';
 import ProjectModal from './ProjectModal';
 import ScrollReveal from './ScrollReveal';
 
 function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
+
+  // Update window width on resize
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Memoize static project data
   const projects = useMemo(() => [
@@ -81,6 +89,23 @@ function Projects() {
     tags: p.tags
   })), [projects]);
 
+  // Responsive card dimensions based on window width
+  const cardDimensions = useMemo(() => {
+    if (windowWidth <= 360) {
+      return { width: 257, height: 194 };
+    } else if (windowWidth <= 412) {
+      return { width: 285, height: 216 };
+    } else if (windowWidth <= 480) {
+      return { width: 314, height: 238 };
+    } else if (windowWidth <= 600) {
+      return { width: 342, height: 259 };
+    } else if (windowWidth <= 768) {
+      return { width: 399, height: 302 };
+    } else {
+      return { width: 650, height: 450 };
+    }
+  }, [windowWidth]);
+
   const handleCardClick = useCallback((cardId) => {
     const project = projects.find(p => p.id === cardId);
     if (project) setSelectedProject(project);
@@ -101,7 +126,7 @@ function Projects() {
             randomRotation={true}
             sensitivity={180}
             sendToBackOnClick={true}
-            cardDimensions={{ width: 650, height: 450 }}
+            cardDimensions={cardDimensions}
             onCardClick={handleCardClick}
           />
         </div>
