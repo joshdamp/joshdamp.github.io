@@ -3,7 +3,8 @@
    ============================================================================ */
 
 const Chatbot = (() => {
-  const GEMINI_API_KEY = 'AIzaSyBhL6wy8cjNfxrDXWzWuVEQ_bqnLfJzxMk'; // Replace with your API key
+  // API key is now handled via environment variables in the React component (Hero.jsx)
+  // This file is deprecated - chatbot functionality has been migrated to src/components/Hero.jsx
   const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
   // Joshua's information for the system prompt
@@ -200,7 +201,7 @@ Be conversational, friendly, and helpful while staying focused on Joshua's infor
       }
     };
 
-    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+    const response = await fetch(`${GEMINI_API_URL}?key=DEPRECATED_FILE`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

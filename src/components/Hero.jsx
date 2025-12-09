@@ -164,36 +164,52 @@ function Hero() {
     setIsLoading(true);
 
     try {
+      const conversationHistory = messages
+        .filter(msg => msg.role !== 'system')
+        .map(msg => ({
+          role: msg.role === 'assistant' ? 'model' : 'user',
+          parts: [{ text: msg.content }]
+        }));
+
+      const payload = {
+        system_instruction: {
+          parts: [{ text: SYSTEM_PROMPT }]
+        },
+        contents: [
+          ...conversationHistory,
+          { role: 'user', parts: [{ text: userMessage }] }
+        ],
+        generationConfig: { temperature: 0.7, maxOutputTokens: 256 },
+        safetySettings: [
+          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+        ]
+      };
+
+      console.log('Sending payload:', JSON.stringify(payload));
+
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [
-              { role: 'user', parts: [{ text: SYSTEM_PROMPT }] },
-              { role: 'model', parts: [{ text: "I understand. I am Joshua Dampil's portfolio assistant." }] },
-              ...messages.slice(1).map(msg => ({
-                role: msg.role === 'assistant' ? 'model' : 'user',
-                parts: [{ text: msg.content }]
-              })),
-              { role: 'user', parts: [{ text: userMessage }] }
-            ],
-            generationConfig: { temperature: 0.7, maxOutputTokens: 256 },
-            safetySettings: [
-              { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-              { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-              { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-              { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-            ]
-          })
+          body: JSON.stringify(payload)
         }
       );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('API Error response:', errorData);
+        throw new Error(`API Error: ${response.status}`);
+      }
 
       const data = await response.json();
       const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm here to help you learn about Joshua.";
       setMessages(prev => [...prev, { role: 'assistant', content: text }]);
     } catch (error) {
+      console.error('Chatbot error:', error);
       setMessages(prev => [...prev, { role: 'assistant', content: "Sorry, I'm having trouble connecting. Please try again." }]);
     } finally {
       setIsLoading(false);
