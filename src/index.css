@@ -1274,13 +1274,14 @@ h2.text-3xl {
     position: fixed;
     top: 0;
     right: -200px;
-    height: auto;
-    max-height: fit-content;
+    height: 100vh;
+    max-height: none;
     padding: 5.5rem 0 1.5rem 0;
-    z-index: 10002;
+    z-index: 10001;
     flex-direction: column;
     gap: 0;
-    overflow: visible;
+    overflow-y: auto;
+    overflow-x: visible;
     transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -1299,8 +1300,9 @@ h2.text-3xl {
     pointer-events: auto !important;
     cursor: pointer !important;
     color: var(--color-text-primary);
-    background: transparent;
+    background: rgba(29, 29, 35, 0.5);
     border: none;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.1);
     font-family: inherit;
     font-size: 0.95rem;
     font-weight: 500;
