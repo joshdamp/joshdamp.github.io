@@ -249,7 +249,8 @@ function Hero() {
         <div className="hero-links">
           <motion.a 
             href="/Joshua_Dampil_CV.pdf" 
-            download="Joshua_Dampil_CV.pdf" 
+            target="_blank"
+            rel="noopener noreferrer"
             className="hero-cv-link"
             initial={{ filter: 'blur(10px)', opacity: 0, y: 50 }}
             animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
