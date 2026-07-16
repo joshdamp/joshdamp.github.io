@@ -190,8 +190,11 @@ function Hero() {
 
       console.log('Sending payload:', JSON.stringify(payload));
 
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
+      // Proxy URL — replace with your Cloudflare Worker URL after deployment
+      // e.g. https://gemini-proxy.YOUR-SUBDOMAIN.workers.dev
+      const PROXY_URL = import.meta.env.VITE_PROXY_URL || 'https://REPLACE_WITH_YOUR_WORKER_URL.workers.dev';
+
+      const response = await fetch(PROXY_URL,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -222,6 +225,11 @@ function Hero() {
       sendMessage();
     }
   }, [sendMessage]);
+
+  // Prevent page scroll when scrolling/typing inside chatbot
+  const stopScrollPropagation = useCallback((e) => {
+    e.stopPropagation();
+  }, []);
 
   return (
     <section id="hero">
@@ -297,7 +305,7 @@ function Hero() {
                 <span className="chatbot-title">Chat with Joshua's AI</span>
                 <button className="chatbot-close-btn" onClick={toggleChat} title="Close">×</button>
               </div>
-              <div className="chatbot-messages">
+              <div className="chatbot-messages" onWheel={stopScrollPropagation} onTouchMove={stopScrollPropagation}>
                 {messages.map((msg, i) => (
                   <div key={i} className={`chatbot-message ${msg.role === 'assistant' ? 'bot-message' : 'user-message'}`}>
                     <p style={{ whiteSpace: 'pre-wrap' }}>{msg.content}</p>
@@ -318,7 +326,8 @@ function Hero() {
                   placeholder="Ask about Joshua..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={handleKeyPress}
+                  onKeyDown={handleKeyPress}
+                  onWheel={stopScrollPropagation}
                   disabled={isLoading}
                 />
                 <button className="chatbot-send-btn" onClick={sendMessage} disabled={isLoading || !input.trim()}>
