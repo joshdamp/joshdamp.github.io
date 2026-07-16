@@ -1,7 +1,15 @@
 import { memo, useState } from 'react';
 
-const Navigation = memo(({ theme, onThemeToggle }) => {
+const Navigation = memo(({ theme, onThemeToggle, currentPage, onNavigate }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleNav = (e, page, sectionId) => {
+    e.preventDefault();
+    if (onNavigate) {
+      onNavigate(page, sectionId);
+    }
+    closeMobileMenu();
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -19,8 +27,7 @@ const Navigation = memo(({ theme, onThemeToggle }) => {
     }
   };
 
-  const handleNavClick = (e) => {
-    e.preventDefault();
+  const handleNavClick = () => {
     closeMobileMenu();
   };
 
@@ -43,11 +50,12 @@ const Navigation = memo(({ theme, onThemeToggle }) => {
           ☰
         </button>
       </div>
-      <div className="nav-links hidden md:flex space-x-4 md:space-x-10 items-center">
-        <a href="#hero" className="hover:text-primary">Home</a>
-        <a href="#about" className="hover:text-primary">About</a>
-        <a href="#projects" className="hover:text-primary">Projects</a>
-        <a href="#contacts" className="hover:text-primary">Contacts</a>
+      <div className="nav-links hidden md:flex space-x-4 md:space-x-10 items-center font-poppins">
+        <a href="#hero" onClick={(e) => handleNav(e, 'home', 'hero')} className={`hover:text-primary ${currentPage === 'home' ? 'text-primary font-semibold' : ''}`}>Home</a>
+        <a href="#about" onClick={(e) => handleNav(e, 'home', 'about')} className="hover:text-primary">About</a>
+        <a href="#projects" onClick={(e) => handleNav(e, 'home', 'projects')} className="hover:text-primary">Projects</a>
+        <a href="#contacts" onClick={(e) => handleNav(e, 'home', 'contacts')} className="hover:text-primary">Contacts</a>
+        <a href="#practicum" onClick={(e) => handleNav(e, 'practicum')} className={`hover:text-primary ${currentPage === 'practicum' ? 'text-primary font-semibold' : ''}`}>Practicum</a>
         <button 
           className="theme-toggle-btn" 
           id="themeToggle" 
@@ -58,11 +66,12 @@ const Navigation = memo(({ theme, onThemeToggle }) => {
           <span>{theme === 'dark' ? '🌙' : '☀️'}</span>
         </button>
       </div>
-      <div className="nav-links-mobile md:hidden">
-        <a href="#hero" className="hover:text-primary" onClick={handleNavClick}>Home</a>
-        <a href="#about" className="hover:text-primary" onClick={handleNavClick}>About</a>
-        <a href="#projects" className="hover:text-primary" onClick={handleNavClick}>Projects</a>
-        <a href="#contacts" className="hover:text-primary" onClick={handleNavClick}>Contacts</a>
+      <div className="nav-links-mobile md:hidden font-poppins">
+        <a href="#hero" onClick={(e) => handleNav(e, 'home', 'hero')} className={`hover:text-primary ${currentPage === 'home' ? 'text-primary font-semibold' : ''}`}>Home</a>
+        <a href="#about" onClick={(e) => handleNav(e, 'home', 'about')} className="hover:text-primary">About</a>
+        <a href="#projects" onClick={(e) => handleNav(e, 'home', 'projects')} className="hover:text-primary">Projects</a>
+        <a href="#contacts" onClick={(e) => handleNav(e, 'home', 'contacts')} className="hover:text-primary">Contacts</a>
+        <a href="#practicum" onClick={(e) => handleNav(e, 'practicum')} className={`hover:text-primary ${currentPage === 'practicum' ? 'text-primary font-semibold' : ''}`}>Practicum</a>
         <button 
           className="theme-toggle-btn-mobile" 
           title="Toggle dark/light mode"

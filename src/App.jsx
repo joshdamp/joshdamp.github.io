@@ -9,6 +9,7 @@ const About = lazy(() => import('./components/About'))
 const Projects = lazy(() => import('./components/Projects'))
 const Contact = lazy(() => import('./components/Contact'))
 const Chatbot = lazy(() => import('./components/Chatbot'))
+const Practicum = lazy(() => import('./components/Practicum'))
 
 // Minimal loading fallback
 const SectionLoader = () => <div style={{ minHeight: '50vh' }} />
@@ -21,6 +22,27 @@ function App() {
     }
     return 'dark'
   })
+
+  const [currentPage, setCurrentPage] = useState('home')
+
+  const handleNavigate = useCallback((page, sectionId) => {
+    if (page === 'home') {
+      setCurrentPage('home');
+      if (sectionId) {
+        setTimeout(() => {
+          const el = document.getElementById(sectionId);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else if (page === 'practicum') {
+      setCurrentPage('practicum');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
 
   const applyTheme = useCallback((themeMode) => {
     const { classList } = document.body
@@ -73,20 +95,34 @@ function App() {
         </Suspense>
       </div>
       
-      <Navigation theme={theme} onThemeToggle={toggleTheme} />
-      <Hero />
+      <Navigation 
+        theme={theme} 
+        onThemeToggle={toggleTheme} 
+        currentPage={currentPage}
+        onNavigate={handleNavigate}
+      />
       
-      <Suspense fallback={<SectionLoader />}>
-        <About />
-      </Suspense>
-      
-      <Suspense fallback={<SectionLoader />}>
-        <Projects />
-      </Suspense>
-      
-      <Suspense fallback={<SectionLoader />}>
-        <Contact />
-      </Suspense>
+      {currentPage === 'home' ? (
+        <>
+          <Hero />
+          
+          <Suspense fallback={<SectionLoader />}>
+            <About />
+          </Suspense>
+          
+          <Suspense fallback={<SectionLoader />}>
+            <Projects />
+          </Suspense>
+          
+          <Suspense fallback={<SectionLoader />}>
+            <Contact />
+          </Suspense>
+        </>
+      ) : (
+        <Suspense fallback={<SectionLoader />}>
+          <Practicum />
+        </Suspense>
+      )}
       
       <Footer />
       

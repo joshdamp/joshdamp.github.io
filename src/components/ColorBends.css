@@ -28,7 +28,7 @@
   position: relative;
 }
 
-.App > *:not(.color-bends-wrapper) {
+.App > *:not(.color-bends-wrapper):not(nav) {
   position: relative;
   z-index: 1;
 }
