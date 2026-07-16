@@ -137,15 +137,18 @@ function Hero() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
   const inputRef = useRef(null);
 
   const toggleChat = useCallback(() => {
     setIsChatOpen(prev => !prev);
   }, []);
 
-  // Auto-scroll to bottom
+  // Auto-scroll to bottom — scroll only within the chat container, not the whole page
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
   }, [messages]);
 
   // Focus input when opened
@@ -305,7 +308,7 @@ function Hero() {
                 <span className="chatbot-title">Chat with Joshua's AI</span>
                 <button className="chatbot-close-btn" onClick={toggleChat} title="Close">×</button>
               </div>
-              <div className="chatbot-messages" onWheel={stopScrollPropagation} onTouchMove={stopScrollPropagation}>
+              <div className="chatbot-messages" ref={messagesContainerRef} onWheel={stopScrollPropagation} onTouchMove={stopScrollPropagation}>
                 {messages.map((msg, i) => (
                   <div key={i} className={`chatbot-message ${msg.role === 'assistant' ? 'bot-message' : 'user-message'}`}>
                     <p style={{ whiteSpace: 'pre-wrap' }}>{msg.content}</p>
