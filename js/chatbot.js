@@ -82,8 +82,20 @@ const Chatbot = (() => {
     ],
     experience: [
       {
-        role: 'Freelance Full-Stack Developer',
-        period: '2024–Present'
+        role: 'Globe Telecom | Entry Engineer Intern | BGC, Taguig',
+        period: 'June 2026 - Present'
+      },
+      {
+        role: 'Ayala Group Summer Internship Program | Strategist & Developer',
+        period: 'June 2026 - Present'
+      },
+      {
+        role: 'SN Group | AI Specialist Intern | Australia (Remote)',
+        period: 'November 2025 - February 2026'
+      },
+      {
+        role: 'Software Engineer | Freelance',
+        period: '2024 - Present'
       }
     ],
     certifications: [

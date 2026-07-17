@@ -28,7 +28,12 @@ function About() {
   const backgroundItems = useMemo(() => [
     {
       category: 'Experience',
-      items: ['Freelance Full-Stack Developer (2024-Present)']
+      items: [
+        'Globe Telecom | Entry Engineer Intern | BGC, Taguig | June 2026 - Present',
+        'Ayala Group Summer Internship Program | Strategist & Developer | June 2026 - Present',
+        'SN Group | AI Specialist Intern | Australia (Remote) | November 2025 - February 2026',
+        'Software Engineer | Freelance | 2024 - Present'
+      ]
     },
     {
       category: 'Education',
