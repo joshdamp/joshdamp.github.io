@@ -23,7 +23,7 @@ const Chatbot = (() => {
     freelance: true,
     social: {
       github: 'https://github.com/joshdamp',
-      linkedin: 'https://www.linkedin.com/in/joshua-dampil123/',
+      linkedin: 'https://www.linkedin.com/in/joshua-dampil/',
       facebook: 'Joshua Dampil',
       instagram: 'jshdamps'
     },
