@@ -39,7 +39,7 @@ The loop never pushes or deploys. It ends with a pull request to `master`, and m
 | 5 | work | the fly-through of eight projects | done |
 | 6 | awards | results board and certifications | done |
 | 7 | contact | the close, contact rows, clock, assistant tile and card | done |
-| 8 | final | remove the old components and assets, production build to `docs/`, run the inspector, open the pull request | pending |
+| 8 | final | remove the old components and assets, production build to `docs/`, run the inspector, open the pull request | done |
 
 ## Log
 
@@ -52,3 +52,4 @@ Each round appends a line here: the section, the attempt number, the result, and
 - work, attempt 1: PASS. Fly-through screens, captions and hint match at both widths. (Fixed before checking: a stray extra frame subscriber.)
 - awards, attempt 1: PASS. Results board and certifications match at both widths.
 - contact, attempt 1: PASS. Close, contact rows, clock, tile and card match at both widths. Fixed a bug the check exposed, also present in the design: the card's intro paragraph took the hero's .intro height (260vh) and hid the suggestions. The assistant answered live through the Worker in a headless test.
+- final, attempt 1: build to docs/ clean, with no console errors or overflow at either width. Removed 23 old component files, public/images and the unused gsap, motion and three packages; the bundle is 299 kB (104 kB gzipped). The tasteskill inspector reports 8 FAIL and 6 WARN, all inherited from the approved design (purple accent, a 3-line claim, long pinned chapters, the tile's shadow, Manrope rather than the inspector's dealt font, the claim only appearing on scroll under reduced motion). They are left as designed for Josh to decide.
