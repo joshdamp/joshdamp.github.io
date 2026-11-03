@@ -38,7 +38,7 @@ The loop never pushes or deploys. It ends with a pull request to `master`, and m
 | 4 | experience | trace timeline, toggles, durations | done |
 | 5 | work | the fly-through of eight projects | done |
 | 6 | awards | results board and certifications | done |
-| 7 | contact | the close, contact rows, clock, assistant tile and card | pending |
+| 7 | contact | the close, contact rows, clock, assistant tile and card | done |
 | 8 | final | remove the old components and assets, production build to `docs/`, run the inspector, open the pull request | pending |
 
 ## Log
@@ -51,3 +51,4 @@ Each round appends a line here: the section, the attempt number, the result, and
 - experience, attempt 1: PASS. Axis, spans, durations, toggles and one-open-at-a-time match at both widths.
 - work, attempt 1: PASS. Fly-through screens, captions and hint match at both widths. (Fixed before checking: a stray extra frame subscriber.)
 - awards, attempt 1: PASS. Results board and certifications match at both widths.
+- contact, attempt 1: PASS. Close, contact rows, clock, tile and card match at both widths. Fixed a bug the check exposed, also present in the design: the card's intro paragraph took the hero's .intro height (260vh) and hid the suggestions. The assistant answered live through the Worker in a headless test.

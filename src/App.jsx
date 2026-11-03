@@ -6,6 +6,9 @@ import Intro from './components/Intro'
 import About from './components/About'
 import Experience from './components/Experience'
 import Work from './components/Work'
+import { Awards, Certifications } from './components/Awards'
+import Contact from './components/Contact'
+import Assistant from './components/Assistant'
 
 // each section sits after a zero-height mark that records where it starts in the flow
 const Mark = () => <i aria-hidden="true" />
@@ -30,12 +33,13 @@ export default function App() {
           <About key="about" />,
           <Experience key="experience" />,
           <Work key="work" />,
-          <section key="awards" className="awards chap" id="awards" />,
-          <section key="certifications" className="pad certs chap" id="certifications" />,
-          <footer key="contact" className="chap" id="contact" />,
+          <Awards key="awards" />,
+          <Certifications key="certifications" />,
+          <Contact key="contact" />,
         ].map(s => <Fragment key={s.key}><Mark />{s}</Fragment>)}
       </main>
       <Flow />
+      <Assistant />
     </>
   )
 }
