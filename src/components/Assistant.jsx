@@ -51,13 +51,13 @@ export default function Assistant() {
     setOpen(true); setMsgs(m => [...m, { q: text }]); setBusy(true); input.current.value = ''
     const reply = await answer(history.current, text)
     history.current.push({ role: 'user', parts: [{ text }] }, { role: 'model', parts: [{ text: reply }] })
-    setMsgs(m => [...m, { a: reply.replace(/\*\*/g, '') }]); setBusy(false)
+    setMsgs(m => [...m, { a: reply.replace(/\*\*/g, '').replace(/^\s*[*-] /gm, '• ') }]); setBusy(false)
   }
 
   return (
     <div className="chat">
       <section ref={card} className="card" id="card" hidden={!open} aria-label="Ask about Joshua">
-        <header><span>Ask about me<span className="soft">Answered by Joshua's assistant</span></span><button className="txt-btn" type="button" onClick={() => setOpen(false)}>Collapse</button></header>
+        <header><span>Ask about me<span className="soft">Answered by Joshua's assistant</span></span><button className="min" type="button" aria-label="Minimize" title="Minimize" onClick={() => setOpen(false)}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" aria-hidden="true"><path d="M6 12h12" /></svg></button></header>
         <div ref={qa} className="qa" aria-live="polite">
           <p className="intro">Ask me about Joshua's projects, his work at Globe Telecom, his studies or how to reach him.</p>
           <ul className="sugg" hidden={msgs.length > 0}>
