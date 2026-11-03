@@ -34,7 +34,7 @@ The loop never pushes or deploys. It ends with a pull request to `master`, and m
 |---|---|---|---|
 | 1 | foundation | tokens, global CSS, fonts, background field, top band and phone menu, flow bar, chapter pinning, reveal | done |
 | 2 | intro | pixel hands with the AI marks, the purple world, the JD name cycle, the dive and the claim | done |
-| 3 | about | logo-mosaic portrait, stack belt, stack dialog, lit statement | pending |
+| 3 | about | logo-mosaic portrait, stack belt, stack dialog, lit statement | done |
 | 4 | experience | trace timeline, toggles, durations | pending |
 | 5 | work | the fly-through of eight projects | pending |
 | 6 | awards | results board and certifications | pending |
@@ -47,3 +47,4 @@ Each round appends a line here: the section, the attempt number, the result, and
 
 - foundation, attempt 1: PASS. Mechanical checks clean; the verifier found only animation-phase differences (logo scan line, dot grid).
 - intro, attempt 1: PASS. Hands, marks, globe, name cycle, claim and dive match at both widths.
+- about, attempt 1: PASS. Mosaic portrait, belt, stack dialog and statement match at both widths.
