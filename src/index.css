@@ -198,6 +198,13 @@ h1 b { font-weight: inherit; color: var(--spark); }
 .certs li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2); align-items: baseline; padding: 22px 24px; border-radius: var(--radius-1); background: var(--surface-100); transition: background-color var(--dur-fast); }
 .certs li:hover { background: var(--surface-200); }
 .certs li b { display: block; font: 400 clamp(22px, 1rem + .8vw, 30px)/1.2 var(--font-manrope); letter-spacing: -0.03em; } .certs li .soft { font-size: 15px; }
+.certs .sub { margin: var(--space-4) 0 var(--space-2); font: 500 14px var(--font-manrope); color: var(--ink-soft); }
+.certs .badges { grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.certs .badges li { display: block; padding: 0; }
+.certs .badges a { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); box-sizing: border-box; min-height: 56px; padding: 10px 18px; font-size: 15px; line-height: 1.35; text-decoration: none; transition: color var(--dur-fast); }
+.certs .badges a:hover { color: var(--signal-hover); }
+.certs .badges svg { width: 16px; height: 16px; flex: none; color: var(--ink-soft); transition: transform var(--dur-swap), color var(--dur-fast); }
+.certs .badges a:hover svg { transform: translate(2px, -2px); color: currentColor; }
 
 /* contact: the close. One big line, the ways to reach him, the name back at full width */
 footer { position: relative; padding-left: var(--space-3); padding-right: var(--space-3); padding-bottom: 120px !important; }
