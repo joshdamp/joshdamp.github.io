@@ -4,6 +4,7 @@ import Band from './components/Band'
 import Flow from './components/Flow'
 import Intro from './components/Intro'
 import About from './components/About'
+import Experience from './components/Experience'
 
 // each section sits after a zero-height mark that records where it starts in the flow
 const Mark = () => <i aria-hidden="true" />
@@ -26,7 +27,7 @@ export default function App() {
         {[
           <Intro key="top" />,
           <About key="about" />,
-          <section key="experience" className="pad exp chap" id="experience" />,
+          <Experience key="experience" />,
           <section key="work" className="space" id="work" />,
           <section key="awards" className="awards chap" id="awards" />,
           <section key="certifications" className="pad certs chap" id="certifications" />,
