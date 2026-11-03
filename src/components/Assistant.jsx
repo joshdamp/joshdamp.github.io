@@ -23,7 +23,7 @@ async function answer(history, text) {
 
 // the assistant: a tile at the corner that opens into a Q&A card
 export default function Assistant() {
-  const [open, setOpen] = useState(false), [msgs, setMsgs] = useState([]), [busy, setBusy] = useState(false), [ti, setTi] = useState(0)
+  const [open, setOpen] = useState(false), [msgs, setMsgs] = useState([]), [busy, setBusy] = useState(false), [typed, setTyped] = useState(false), [ti, setTi] = useState(0)
   const card = useRef(null), tile = useRef(null), input = useRef(null), qa = useRef(null), tease = useRef(null), history = useRef([]), first = useRef(true)
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function Assistant() {
   const send = async raw => {
     const text = raw.trim()
     if (!text || busy) return
-    setOpen(true); setMsgs(m => [...m, { q: text }]); setBusy(true); input.current.value = ''
+    setOpen(true); setMsgs(m => [...m, { q: text }]); setBusy(true); input.current.value = ''; setTyped(false)
     const reply = await answer(history.current, text)
     history.current.push({ role: 'user', parts: [{ text }] }, { role: 'model', parts: [{ text: reply }] })
     setMsgs(m => [...m, { a: reply.replace(/\*\*/g, '').replace(/^\s*[*-] /gm, '• ') }]); setBusy(false)
@@ -67,7 +67,7 @@ export default function Assistant() {
           {busy && <p className="a thinking">Thinking</p>}
         </div>
         <form className="field" onSubmit={e => { e.preventDefault(); send(input.current.value) }}>
-          <label htmlFor="q">Your question</label><input ref={input} id="q" autoComplete="off" placeholder="Type a question" /><button className="txt-btn" type="submit">Ask</button>
+          <label htmlFor="q">Your question</label><input ref={input} id="q" autoComplete="off" placeholder="Type a question" onInput={e => setTyped(!!e.target.value.trim())} /><button className="txt-btn" type="submit" disabled={!typed || busy}>Ask</button>
         </form>
       </section>
       <button ref={tile} className="ask-tile" id="tile" type="button" hidden={open} aria-expanded={open} aria-controls="card" onClick={() => setOpen(true)}>
