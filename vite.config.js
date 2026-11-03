@@ -18,9 +18,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vendor-react': ['react', 'react-dom'],
-          'vendor-three': ['three'],
-          'vendor-motion': ['motion', 'gsap']
+          'vendor-react': ['react', 'react-dom']
         }
       }
     },
@@ -36,6 +34,6 @@ export default defineConfig({
   },
   // Optimize dependency pre-bundling
   optimizeDeps: {
-    include: ['react', 'react-dom', 'motion', 'gsap', 'three']
+    include: ['react', 'react-dom']
   }
 })

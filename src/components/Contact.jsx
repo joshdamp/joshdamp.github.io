@@ -1,80 +1,38 @@
-import { memo } from 'react';
-import ScrollReveal from './ScrollReveal';
-import StarBorder from './StarBorder';
+import { useEffect, useRef, useState } from 'react'
+import useClock from '../lib/useClock'
 
-function Contact() {
-  return (
-    <section id="contacts" className="container mx-auto px-4 md:px-6 py-12 md:py-20">
-      <div className="pt-8 md:pt-16">
-        <ScrollReveal enableBlur={true} blurStrength={8} y={30} duration={0.8}>
-          <h2 className="text-2xl md:text-3xl font-semibold text-primary text-center mb-8 md:mb-16 title-contacts">Connect With Me</h2>
-        </ScrollReveal>
-      </div>
+const Arrow = () => <svg className="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+const EMAIL = 'joshuadamps@gmail.com'
 
-      <ScrollReveal enableBlur={true} blurStrength={6} y={40} duration={1} delay={0.1}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
-          {/* Location Card */}
-          <StarBorder color="cyan" speed="5s" thickness={0.5}>
-            <div className="contact-card p-4 md:p-6 flex items-center">
-              <div className="mr-4 md:mr-6">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 md:h-10 md:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm md:text-base text-white">Poblacion, Muntinlupa City</p>
-              </div>
-            </div>
-          </StarBorder>
-
-          {/* Email Card */}
-          <StarBorder color="cyan" speed="5s" thickness={0.5}>
-            <div className="contact-card p-4 md:p-6 flex items-center">
-              <div className="mr-4 md:mr-6">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 md:h-10 md:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm md:text-base text-white">joshuadamps@gmail.com</p>
-                <p className="text-sm md:text-base text-white">joshuagdampil@gmail.com</p>
-              </div>
-            </div>
-          </StarBorder>
-
-          {/* Social Media Card */}
-          <StarBorder color="cyan" speed="5s" thickness={0.5}>
-            <div className="contact-card p-4 md:p-6 flex items-center">
-              <div className="mr-4 md:mr-6">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 md:h-10 md:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm md:text-base text-white">Facebook: Joshua Dampil</p>
-                <p className="text-sm md:text-base text-white">LinkedIn: Joshua Dampil</p>
-              </div>
-            </div>
-          </StarBorder>
-
-          {/* Phone Card */}
-          <StarBorder color="cyan" speed="5s" thickness={0.5}>
-            <div className="contact-card p-4 md:p-6 flex items-center">
-              <div className="mr-4 md:mr-6">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 md:h-10 md:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm md:text-base text-white">09924193461</p>
-              </div>
-            </div>
-          </StarBorder>
-        </div>
-      </ScrollReveal>
-    </section>
-  )
+function Copy() {
+  const [label, setLabel] = useState('Copy'), timer = useRef(0)
+  useEffect(() => () => clearTimeout(timer.current), [])
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(EMAIL); setLabel('Copied') } catch { setLabel('Copy failed') }
+    clearTimeout(timer.current); timer.current = setTimeout(() => setLabel('Copy'), 1600)
+  }
+  return <button className="copy" type="button" onClick={copy}>{label}</button>
 }
 
-export default memo(Contact);
+// contact: the close. One big line, the ways to reach him, the time where he is
+export default function Contact() {
+  const clock = useClock()
+  return (
+    <footer className="chap" id="contact" aria-labelledby="h-contact">
+      <h2 className="close" id="h-contact" data-reveal>Let's get the <b>j</b>ob <b>d</b>one.</h2>
+      <div className="reach">
+        <ul className="ways">
+          <li data-reveal style={{ '--i': 1 }}><span className="soft">Email</span><a href={'mailto:' + EMAIL}>{EMAIL}</a><Copy /></li>
+          <li data-reveal style={{ '--i': 2 }}><span className="soft">LinkedIn</span><a href="https://www.linkedin.com/in/joshua-dampil/" target="_blank" rel="noopener">joshua-dampil</a><Arrow /></li>
+          <li data-reveal style={{ '--i': 3 }}><span className="soft">GitHub</span><a href="https://github.com/joshdamp" target="_blank" rel="noopener">joshdamp</a><Arrow /></li>
+          <li data-reveal style={{ '--i': 4 }}><span className="soft">CV</span><a href="/Joshua_Dampil_CV.pdf" download="Joshua_Dampil_CV.pdf" target="_blank" rel="noopener">Download my CV</a><Arrow /></li>
+        </ul>
+        <div className="now" data-reveal style={{ '--i': 2 }}>
+          <p className="clockbig">{clock}</p>
+          <p><span className="live" aria-hidden="true" />In Muntinlupa, Philippines. Currently a Solutions Architect Intern at Globe Telecom.</p>
+          <a className="btn" href={'mailto:' + EMAIL}>Email me <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+        </div>
+      </div>
+    </footer>
+  )
+}
