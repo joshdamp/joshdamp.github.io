@@ -10,4 +10,7 @@ build/
 .env.*.local
 
 # Logs
-*.logloop/shots/
+*.log
+
+# build-loop screenshots
+loop/shots/
