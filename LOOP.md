@@ -36,7 +36,7 @@ The loop never pushes or deploys. It ends with a pull request to `master`, and m
 | 2 | intro | pixel hands with the AI marks, the purple world, the JD name cycle, the dive and the claim | done |
 | 3 | about | logo-mosaic portrait, stack belt, stack dialog, lit statement | done |
 | 4 | experience | trace timeline, toggles, durations | done |
-| 5 | work | the fly-through of eight projects | pending |
+| 5 | work | the fly-through of eight projects | done |
 | 6 | awards | results board and certifications | pending |
 | 7 | contact | the close, contact rows, clock, assistant tile and card | pending |
 | 8 | final | remove the old components and assets, production build to `docs/`, run the inspector, open the pull request | pending |
@@ -49,3 +49,4 @@ Each round appends a line here: the section, the attempt number, the result, and
 - intro, attempt 1: PASS. Hands, marks, globe, name cycle, claim and dive match at both widths.
 - about, attempt 1: PASS. Mosaic portrait, belt, stack dialog and statement match at both widths.
 - experience, attempt 1: PASS. Axis, spans, durations, toggles and one-open-at-a-time match at both widths.
+- work, attempt 1: PASS. Fly-through screens, captions and hint match at both widths. (Fixed before checking: a stray extra frame subscriber.)
