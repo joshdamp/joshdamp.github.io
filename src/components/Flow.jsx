@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { onFrame, still } from '../lib/loop'
 
 export const CHAPTERS = ['top', 'about', 'experience', 'work', 'awards', 'certifications', 'contact']
-const NAMES = { about: 'About me', experience: 'Experience', work: 'Things I built', awards: 'Awards', certifications: 'Certifications', contact: 'Contact' }
+const NAMES = { about: 'About me', experience: 'Experience', work: 'Featured projects', awards: 'Awards', certifications: 'Certifications', contact: 'Contact' }
 
 // chapters: each section pins when it ends; as the next slides over it, it lifts, shrinks a little and fades out.
 // The flow bar shows where you are, fills each section's line as you read it, and jumps between them.

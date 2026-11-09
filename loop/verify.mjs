@@ -16,7 +16,7 @@ const SPEC = {
   intro: [['top', 0], ['top', .9], ['top', 1.6]],
   about: [['about', 0], ['about', 0, "document.getElementById('belt').click()"]],
   experience: [['experience', 0], ['experience', 0, "document.querySelector('.span-row').click()"]],
-  work: [['work', 0], ['work', 2.6]],
+  work: [['work', 0], ['work', 1], ['work', 2], ['work', 0, "document.querySelector('.screen')?.click()"]],
   awards: [['awards', 0], ['certifications', 0]],
   contact: [['contact', 0], ['contact', 0, "document.getElementById('tile').click()"]],
 }

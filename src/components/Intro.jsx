@@ -3,7 +3,7 @@ import { onFrame, fitCanvas, still, token, scramble } from '../lib/loop'
 import { LOGOS } from '../data/handLogos'
 
 // the name: J and D stay, the rest decodes into what else JD stands for
-const JD = [['Joshua', 'Dampil'], ['Just', 'Developing'], ['Just', 'Deploying'], ['Job', 'Done']]
+const JD = [['Joshua', 'Dampil'], ['Joyfully', 'Developing'], ['Just', 'Deploying'], ['Job', 'Done']]
 const setWord = (el, s) => { el.innerHTML = `<b>${s[0]}</b>${s.slice(1)}` }
 const GAPX = .477, GAPY = .45 // where the fingertips meet in hands.png, as a fraction of its size
 
