@@ -7,6 +7,8 @@ const svgUri = svg => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s
 const Icon = ({ s: [, svg, colour] }) => <img alt="" src={svgUri(colour ? svg.replace('<svg ', `<svg fill="${colour}" `) : svg)} />
 const GROUPS = [...new Set(STACK.map(s => s[3]))]
 const SAY = 'Computer Science graduate specialising in machine learning, working across solutions architecture, applied AI and full-stack. Hackathon champion and international finalist.'
+const STATS = [['20+', 'Clients'], ['2 yrs', 'Experience'], ['10+', 'Certifications']]
+const FACE = [.46, .36, .22] // centre x, y and radius of the face oval, as fractions of the cut-out's width and height
 const KEY = /^(machine|learning,|Hackathon|champion|international|finalist\.)$/ // the words that carry the claim light in purple
 
 // the portrait: Josh's cut-out rebuilt from the marks of his stack; bigger marks on flat areas, small ones on the face
@@ -14,7 +16,7 @@ function Portrait() {
   const ref = useRef(null)
   useEffect(() => {
     const me = ref.current, mx = me.getContext('2d'), mimg = new Image(), INK = token('--ink', '#f1f2ef'), S300 = token('--surface-300', '#26282c')
-    let tiles = [], mw = 0, mh = 0, born = -1, ptr = { x: -999, y: -999 }, live = true
+    let tiles = [], face = null, mw = 0, mh = 0, born = -1, ptr = { x: -999, y: -999 }, live = true
     const glyphs = STACK.map(([name, svg]) => {
       const g = { name, c: null }, img = new Image()
       img.onload = () => {
@@ -35,8 +37,15 @@ function Portrait() {
       for (let i = 0; i < cols * rows; i++) if (px[i * 4 + 3] > 120) L[i] = px[i * 4] / 255
       // stretch the tones inside the figure so the face keeps its contrast
       const v = [...L].filter(x => x >= 0).sort((a, b) => a - b), lo = v[Math.floor(v.length * .04)] || 0, hi = v[Math.floor(v.length * .97)] || 1, norm = x => Math.min(1, Math.max(0, (x - lo) / (hi - lo)))
+      // the face shows as the photo in blocks of the grid's own size, through a soft oval; the marks stay faint on top
+      const W = cols * P, H = rows * P, fx = W * FACE[0], fy = H * FACE[1], fr = W * FACE[2], fw = (x, y) => Math.max(0, Math.min(1, 1.6 - 1.6 * Math.hypot(x - fx, (y - fy) * .8) / fr))
+      face = document.createElement('canvas'); face.width = mw; face.height = mh
+      const fc = face.getContext('2d'), gr = fc.createRadialGradient(fx, fy, fr * .35, fx, fy, fr)
+      const pix = document.createElement('canvas'); pix.width = 88; pix.height = Math.round(88 * H / W); pix.getContext('2d').drawImage(mimg, 0, 0, pix.width, pix.height) // same block count at every width
+      fc.imageSmoothingEnabled = false; fc.filter = 'grayscale(1) contrast(1.3) brightness(1.1)'; fc.drawImage(pix, 0, 0, W, H); fc.filter = 'none'
+      gr.addColorStop(0, '#000'); gr.addColorStop(1, 'transparent'); fc.globalCompositeOperation = 'destination-in'; fc.fillStyle = gr; fc.fillRect(0, 0, mw, mh)
       tiles = []; let n = 0
-      const add = (r, c, k, l) => tiles.push({ x: (c + k / 2) * P, y: (r + k / 2) * P, s: k * P, l, g: glyphs[(n++ * 7 + r * 3 + c) % glyphs.length], z: 1, dx: (Math.random() - .5) * mw * 1.4, dy: (Math.random() - .5) * mh })
+      const add = (r, c, k, l) => tiles.push({ x: (c + k / 2) * P, y: (r + k / 2) * P, s: k * P, l, f: fw((c + k / 2) * P, (r + k / 2) * P), g: glyphs[(n++ * 7 + r * 3 + c) % glyphs.length], z: 1, dx: (Math.random() - .5) * mw * 1.4, dy: (Math.random() - .5) * mh })
       // flat areas take big, readable marks; detail (the face) takes small ones
       for (const [k, tol] of [[4, .07], [2, .13]]) for (let r = 0; r + k <= rows; r += k) for (let c = 0; c + k <= cols; c += k) {
         let mn = 2, mxv = -1, sum = 0, ok = true
@@ -58,12 +67,13 @@ function Portrait() {
       if (born < 0) born = t
       const life = still ? 1 : Math.min(1, (t - born) / 1300), e = 1 - Math.pow(1 - life, 3)
       mx.clearRect(0, 0, mw, mh)
+      mx.globalAlpha = e; mx.drawImage(face, 0, 0)
       let near = null, nd = 14
       const paint = q => {
         const x = q.x + q.dx * (1 - e), y = q.y + q.dy * (1 - e), s = q.s * q.z
         // a faint square holds the tone, the mark on top carries the detail
-        mx.globalAlpha = e * q.l * .26; mx.fillStyle = INK; mx.fillRect(x - q.s / 2, y - q.s / 2, q.s - 1, q.s - 1)
-        if (q.g.c) { mx.globalAlpha = e * (q.z > 1.05 ? 1 : .1 + .9 * q.l); mx.drawImage(q.g.c, x - s * .44, y - s * .44, s * .88, s * .88) }
+        const a = e * (1 - q.f * .8); mx.globalAlpha = a * q.l * .26; mx.fillStyle = INK; mx.fillRect(x - q.s / 2, y - q.s / 2, q.s - 1, q.s - 1)
+        if (q.g.c) { mx.globalAlpha = q.z > 1.05 ? e : a * (.1 + .9 * q.l); mx.drawImage(q.g.c, x - s * .44, y - s * .44, s * .88, s * .88) }
       }
       // marks near the pointer magnify and paint last, on top
       const big = []
@@ -113,6 +123,7 @@ export default function About() {
       <div>
         <h2 id="h-about" data-reveal>About me</h2>
         <p className="say" ref={say}>{SAY.split(/(\s+)/).map((t, i) => /^\s+$/.test(t) ? t : <span key={i} className={KEY.test(t) ? 'w k' : 'w'}>{t}</span>)}</p>
+        <ul className="stats">{STATS.map(([n, l], i) => <li key={l} data-reveal style={{ '--i': i }}><b>{n}</b><span className="soft">{l}</span></li>)}</ul>
       </div>
       <dialog className="stackdlg" ref={dlg} aria-labelledby="h-stack" onClick={e => e.target === dlg.current && dlg.current.close()}>
         <header><h2 id="h-stack">My stack</h2><button className="txt-btn" type="button" onClick={() => dlg.current.close()}>Close</button></header>

@@ -60,7 +60,7 @@ export default function Band() {
       <div className="menu" id="menu" hidden={!open} role="dialog" aria-modal="true" aria-label="Menu">
         <div className="top"><span>Joshua Dampil</span><button ref={close} className="txt-btn" type="button" onClick={() => setOpen(false)}>Close</button></div>
         <nav aria-label="Sections" onClick={e => e.target.closest('a') && setOpen(false)}>
-          <a href="#about">About me</a><a href="#experience">Experience</a><a href="#work">Things I built</a><a href="#awards">Awards</a><a href="#contact">Contact</a>
+          <a href="#about">About me</a><a href="#experience">Experience</a><a href="#work">Featured projects</a><a href="#awards">Awards</a><a href="#contact">Contact</a>
         </nav>
         <div className="mfacts">
           <div><span className="label">Latest</span>Solutions Architect Intern, Globe Telecom</div>

@@ -1,51 +1,101 @@
-import { useEffect, useRef, useState } from 'react'
-import { onFrame, still } from '../lib/loop'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { onFrame, fitCanvas, scramble, still, token } from '../lib/loop'
 import { WORK } from '../data/work'
 
-const GAP = 1600 // depth between projects
-const rnd = s => { const x = Math.sin(s * 999) * 10000; return x - Math.floor(x) }
-// the first screen of each project leads, slightly off centre; the rest sit wide and high, clear of the caption at bottom left
-const SHOTS = WORK.flatMap(([name, , , srcs], k) => srcs.map((src, j) => {
-  const side = j === 0 ? 0 : (j % 2 ? 1 : -1)
-  return { src, alt: `${name} screen ${j + 1}`, k, z: -k * GAP - 380 - j * 420, x: j === 0 ? (k % 2 ? .1 : -.06) : side * (.5 + rnd(k * 7 + j) * .16), y: j === 0 ? -.04 : -.12 - rnd(k * 3 + j) * .22, s: j === 0 ? .9 : .5 }
-}))
+const Out = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" /></svg>
+const small = src => src.replace('.webp', '-s.webp')
+// every screen decoded up front, so a swap can paint both pictures on its first frame
+const CACHE = {}
+const load = () => WORK.forEach(p => p[5].forEach(s => { if (!CACHE[s]) { const im = new Image(); im.src = s; CACHE[s] = im } }))
+const ready = s => CACHE[s]?.complete && CACHE[s].naturalWidth > 0
 
-// things I built: screens placed through depth; scrolling flies the camera forward
+// the screen: a new picture rebuilds out of the old one in the page's own grid, cell by cell, a purple dot at the seam
+function Screen({ src, alt, onOpen }) {
+  const cv = useRef(null), img = useRef(null), shown = useRef(src)
+  useLayoutEffect(() => {
+    const from = shown.current
+    shown.current = src
+    if (from === src) return
+    if (still || !ready(from) || !ready(src)) { img.current.animate([{ opacity: .3 }, { opacity: 1 }], { duration: 240 }); return }
+    const c = cv.current, x = c.getContext('2d'), { w, h } = fitCanvas(c), a = CACHE[from], b = CACHE[src]
+    const N = w < 520 ? 22 : 40, s = w / N, M = Math.ceil(h / s), kx = a.naturalWidth / w, ky = a.naturalHeight / h, SPARK = token('--spark', '#9d7bff')
+    // mostly random, with a slight left-to-right sweep so the change reads as travelling
+    const thr = Float32Array.from({ length: N * M }, (_, i) => Math.random() * .72 + (i % N) / N * .28)
+    const cell = (im, i) => { const cx = (i % N) * s, cy = Math.floor(i / N) * s; x.drawImage(im, cx * kx, cy * ky, s * kx, s * ky, cx, cy, s + .5, s + .5) }
+    c.style.visibility = 'visible'
+    const t0 = performance.now()
+    const off = onFrame(t => {
+      const p = (t - t0) / 900 * 1.14
+      for (let i = 0; i < N * M; i++) {
+        const v = thr[i]
+        if (p < v) cell(a, i)
+        else if (p < v + .14) { const cx = (i % N) * s, cy = Math.floor(i / N) * s; x.fillStyle = '#08090a'; x.fillRect(cx, cy, s + .5, s + .5); x.fillStyle = SPARK; x.fillRect(cx + s * .3, cy + s * .3, s * .4, s * .4) }
+        else cell(b, i)
+      }
+      if (p >= 1.14) { c.style.visibility = 'hidden'; off() }
+    })
+    return () => { off(); c.style.visibility = 'hidden' }
+  }, [src])
+  return (
+    <button className="screen" type="button" onClick={onOpen} aria-label={`View ${alt} full size`}>
+      <img ref={img} src={src} alt={alt} width="1600" height="900" />
+      <canvas ref={cv} aria-hidden="true" />
+      <span className="zoom" aria-hidden="true">Full size <Out /></span>
+    </button>
+  )
+}
+
+// featured projects: the stage holds while you scroll; each screen of scroll is the next project
 export default function Work() {
-  const [cur, setCur] = useState(0)
-  const sec = useRef(null), deck = useRef(null), cap = useRef(null), curRef = useRef(0)
+  const sec = useRef(null), name = useRef(null), dlg = useRef(null), kRef = useRef(0), prev = useRef(0)
+  const [k, setK] = useState(0), [i, setI] = useState(0), [big, setBig] = useState(0)
+  const [title, kind, line, stack, links, srcs] = WORK[k]
+  const mark = () => sec.current.previousElementSibling.offsetTop // flow position, unmoved by pinning
   useEffect(() => {
-    const els = [...deck.current.querySelectorAll('.shot')]
-    let camZ = 0
+    load()
     return onFrame((t, y) => {
-      const space = sec.current, span = space.offsetHeight - innerHeight, p = Math.min(1, Math.max(0, (y - space.offsetTop) / span))
-      camZ += (-p * (WORK.length - 1) * GAP - camZ) * (still ? 1 : .1)
-      const k = Math.min(WORK.length - 1, Math.max(0, Math.round(-camZ / GAP)))
-      if (k !== curRef.current) { curRef.current = k; setCur(k) }
-      const vw = deck.current.clientWidth, vh = deck.current.clientHeight
-      SHOTS.forEach((s, i) => {
-        const el = els[i], dz = s.z - camZ
-        if (dz > 400 || dz < -3600) { el.style.visibility = 'hidden'; return }
-        el.style.visibility = 'visible'
-        const fadeFar = Math.min(1, (dz + 3600) / 1400), fadeNear = dz > -260 ? Math.max(0, 1 - (dz + 260) / 520) : 1
-        el.style.opacity = (fadeFar * fadeNear * (s.k === k ? 1 : .3)).toFixed(3)
-        el.style.zIndex = Math.round(5000 + dz) // nearer screens paint over farther ones
-        el.style.transform = `translate3d(${s.x * vw}px, ${s.y * vh}px, ${dz}px) scale(${s.s})`
-      })
+      const span = sec.current.offsetHeight - innerHeight, p = (y - mark()) / span
+      const n = Math.min(WORK.length - 1, Math.max(0, Math.floor(p * WORK.length)))
+      if (n !== kRef.current) { kRef.current = n; setK(n); setI(0) }
     })
   }, [])
   useEffect(() => {
-    if (!still && cur) cap.current.animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], { duration: 450, easing: 'cubic-bezier(.2,.8,.2,1)' })
-  }, [cur])
-  const [name, stack, line] = WORK[cur]
+    const el = name.current, to = WORK[k][0]
+    if (still || el.textContent === to) el.textContent = to
+    else scramble(el, { from: WORK[prev.current][0], to, ms: 650 })
+    prev.current = k
+  }, [k])
+  const jump = j => scrollTo({ top: mark() + j * (sec.current.offsetHeight - innerHeight) / WORK.length + 2, behavior: still ? 'auto' : 'smooth' })
+  const step = d => setBig(b => (b + d + srcs.length) % srcs.length)
   return (
-    <section ref={sec} className="space" id="work" aria-labelledby="h-work">
-      <div ref={deck} className="deck">
-        <h2 id="h-work">Things I built</h2>
-        {SHOTS.map(s => <figure key={s.src} className="shot" style={{ visibility: 'hidden' }}><img src={s.src} alt={s.alt} width="820" height="461" /></figure>)}
-        <div ref={cap} className="cap" aria-live="polite"><h3>{name}</h3><p className="st">{stack}</p><p>{line}</p></div>
-        <p className="hint">Scroll to fly through</p>
+    <section ref={sec} className="space work" id="work" aria-labelledby="h-work" style={{ height: `${WORK.length * 100}vh` }}>
+      <div className="stage">
+        <header className="whead">
+          <h2 id="h-work">Featured projects</h2>
+          <ul className="pick">{WORK.map((p, j) => <li key={p[0]}><button type="button" aria-current={j === k ? 'true' : undefined} onClick={() => jump(j)}>{p[0]}</button></li>)}</ul>
+        </header>
+        <article className="proj" aria-live="polite">
+          <div className="view">
+            <Screen src={srcs[i]} alt={`${title}, screen ${i + 1} of ${srcs.length}`} onOpen={() => { setBig(i); dlg.current.showModal() }} />
+            <div className="thumbs" role="group" aria-label={`${title} screens`}>
+              {srcs.map((s, j) => <button key={s} type="button" aria-pressed={i === j} aria-label={`Show screen ${j + 1}`} onClick={() => setI(j)}><img src={small(s)} alt="" width="480" height="270" /></button>)}
+            </div>
+          </div>
+          <div className="info" key={k}>
+            <h3><span ref={name} aria-hidden="true">{WORK[0][0]}</span><span className="sr-only">{title}</span></h3>
+            <p className="kind">{kind}</p>
+            <p>{line}</p>
+            <ul className="tags">{stack.map(t => <li key={t}>{t}</li>)}</ul>
+            <div className="links">{links.map(([label, url], j) => <a key={url} className={j ? 'btn ghost' : 'btn'} href={url} target="_blank" rel="noopener">{label}<Out /></a>)}</div>
+          </div>
+        </article>
       </div>
+      <dialog className="lightbox" ref={dlg} aria-label={`${title} screens`} onClick={e => e.target === dlg.current && dlg.current.close()}
+        onKeyDown={e => { if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1) }}>
+        <header><span>{title} <span className="soft">{big + 1} of {srcs.length}</span></span>
+          <span className="nav"><button className="txt-btn" type="button" onClick={() => step(-1)}>Previous</button><button className="txt-btn" type="button" onClick={() => step(1)}>Next</button><button className="txt-btn" type="button" onClick={() => dlg.current.close()}>Close</button></span></header>
+        <img src={srcs[big]} alt={`${title}, screen ${big + 1} of ${srcs.length}`} width="1600" height="900" />
+      </dialog>
     </section>
   )
 }
